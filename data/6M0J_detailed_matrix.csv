@@ -1,0 +1,21 @@
+,ASN169,ALA157,PHE138,TYR171,LYS99,GLN175,GLU166,TYR135,LEU137,TYR187,TYR131,THR182,GLN180,ASN183,GLY128,PHE168,GLY184,GLY178
+GLN6,#contacts: 3 ;MinDistance: 2.7Å ;C-alphaDistance: 7.0Å ;y_atom: OE1;x_atom: ND2 ;interaction: hbond_2.7Å,#contacts: 1 ;MinDistance: 3.7Å ;C-alphaDistance: 6.1Å ;y_atom: CG;x_atom: O,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+THR9,0,#contacts: 1 ;MinDistance: 4.0Å ;C-alphaDistance: 7.1Å ;y_atom: CG2;x_atom: CB,#contacts: 1 ;MinDistance: 3.8Å ;C-alphaDistance: 8.4Å ;y_atom: CG2;x_atom: CD1,#contacts: 1 ;MinDistance: 3.7Å ;C-alphaDistance: 9.3Å ;y_atom: CG2;x_atom: CE2,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+PHE10,0,0,0,#contacts: 1 ;MinDistance: 3.4Å ;C-alphaDistance: 8.9Å ;y_atom: CA;x_atom: OH,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+ASP12,0,0,#contacts: 1 ;MinDistance: 3.9Å ;C-alphaDistance: 9.1Å ;y_atom: CB;x_atom: CE1,0,#contacts: 3 ;MinDistance: 2.9Å ;C-alphaDistance: 11.0Å ;y_atom: OD2;x_atom: NZ ;interaction: hbond_2.9Å,0,0,0,0,0,0,0,0,0,0,0,0,0
+LYS13,0,0,0,#contacts: 1 ;MinDistance: 4.0Å ;C-alphaDistance: 7.9Å ;y_atom: CG;x_atom: CD1,0,#contacts: 2 ;MinDistance: 2.9Å ;C-alphaDistance: 8.8Å ;y_atom: NZ;x_atom: NE2 ;interaction: hbond_3.6Å,0,0,0,0,0,0,0,0,0,0,0,0
+HIS16,0,0,0,0,0,0,0,#contacts: 1 ;MinDistance: 2.9Å ;C-alphaDistance: 11.4Å ;y_atom: CD2;x_atom: OH ;interaction: hbond_3.8Å,#contacts: 1 ;MinDistance: 3.6Å ;C-alphaDistance: 9.2Å ;y_atom: CE1;x_atom: CD1,0,0,0,0,0,0,0,0,0
+GLU17,0,0,0,0,0,#contacts: 1 ;MinDistance: 3.5Å ;C-alphaDistance: 8.4Å ;y_atom: OE2;x_atom: NE2,0,0,0,0,0,0,0,0,0,0,0,0
+GLU19,0,0,0,0,0,0,0,0,0,#contacts: 2 ;MinDistance: 3.5Å ;C-alphaDistance: 11.1Å ;y_atom: OE2;x_atom: OH ;interaction: hbond_3.4Å,0,0,0,0,0,0,0,0
+ASP20,0,0,0,0,0,0,0,0,0,0,#contacts: 4 ;MinDistance: 2.7Å ;C-alphaDistance: 10.7Å ;y_atom: OD2;x_atom: OH ;interaction: hbond_3.2Å,0,0,0,0,0,0,0
+TYR23,0,0,0,0,0,0,0,0,0,0,0,#contacts: 3 ;MinDistance: 2.7Å ;C-alphaDistance: 10.4Å ;y_atom: OH;x_atom: OG1 ;interaction: hbond_2.7Å,#contacts: 1 ;MinDistance: 3.7Å ;C-alphaDistance: 9.7Å ;y_atom: CD2;x_atom: CD,#contacts: 1 ;MinDistance: 3.7Å ;C-alphaDistance: 9.4Å ;y_atom: CE2;x_atom: OD1,0,0,0,0
+GLN24,0,0,0,0,0,0,0,0,0,0,#contacts: 1 ;MinDistance: 2.8Å ;C-alphaDistance: 13.1Å ;y_atom: NE2;x_atom: OH,0,#contacts: 1 ;MinDistance: 3.4Å ;C-alphaDistance: 9.8Å ;y_atom: CD;x_atom: NE2,0,#contacts: 1 ;MinDistance: 3.2Å ;C-alphaDistance: 7.7Å ;y_atom: NE2;x_atom: O ;interaction: hbond_3.2Å,0,0,0
+LEU61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,#contacts: 1 ;MinDistance: 3.8Å ;C-alphaDistance: 7.5Å ;y_atom: CD2;x_atom: CD1,0,0
+MET64,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,#contacts: 1 ;MinDistance: 3.6Å ;C-alphaDistance: 9.1Å ;y_atom: CB;x_atom: CE1,0,0
+TYR65,#contacts: 3 ;MinDistance: 2.8Å ;C-alphaDistance: 10.6Å ;y_atom: OH;x_atom: OD1 ;interaction: hbond_2.8Å,0,0,#contacts: 1 ;MinDistance: 3.5Å ;C-alphaDistance: 16.1Å ;y_atom: OH;x_atom: OH,0,0,0,0,0,0,0,0,0,0,0,#contacts: 1 ;MinDistance: 3.7Å ;C-alphaDistance: 10.7Å ;y_atom: CE1;x_atom: CE1,0,0
+ASN312,0,0,0,0,0,0,0,0,0,0,0,#contacts: 1 ;MinDistance: 3.9Å ;C-alphaDistance: 7.5Å ;y_atom: CG;x_atom: CG2,0,0,0,0,0,0
+LYS335,0,0,0,0,0,0,0,0,0,#contacts: 1 ;MinDistance: 3.4Å ;C-alphaDistance: 5.7Å ;y_atom: C;x_atom: CD1,0,0,0,#contacts: 1 ;MinDistance: 3.7Å ;C-alphaDistance: 5.5Å ;y_atom: O;x_atom: C,0,0,#contacts: 3 ;MinDistance: 2.8Å ;C-alphaDistance: 6.0Å ;y_atom: O;x_atom: N ;interaction: hbond_2.8Å,#contacts: 1 ;MinDistance: 4.0Å ;C-alphaDistance: 9.6Å ;y_atom: CE;x_atom: O
+GLY336,0,0,0,0,0,0,0,0,0,#contacts: 1 ;MinDistance: 3.8Å ;C-alphaDistance: 6.6Å ;y_atom: N;x_atom: CD1,0,0,0,0,0,0,#contacts: 3 ;MinDistance: 3.4Å ;C-alphaDistance: 4.1Å ;y_atom: O;x_atom: CA ;interaction: hbond_3.6Å,0
+ASP337,0,0,0,0,0,0,0,0,0,0,0,#contacts: 1 ;MinDistance: 3.6Å ;C-alphaDistance: 6.6Å ;y_atom: CB;x_atom: O,0,0,0,0,0,0
+ARG339,0,0,0,0,0,0,0,0,0,0,0,#contacts: 1 ;MinDistance: 3.5Å ;C-alphaDistance: 10.5Å ;y_atom: NH1;x_atom: CB,0,0,0,0,0,0
+ARG375,0,0,0,0,0,0,0,0,0,#contacts: 1 ;MinDistance: 3.7Å ;C-alphaDistance: 16.6Å ;y_atom: NH2;x_atom: OH,0,0,0,0,0,0,0,0
