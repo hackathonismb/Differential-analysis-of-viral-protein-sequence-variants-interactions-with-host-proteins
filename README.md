@@ -28,6 +28,10 @@ The establishment of a reference-based numbering system that allows comparison b
 The creation of contact maps will be a necessary mediator to downstream differential analysis. 
 Ultimately, all outcomes will need to be easily visualized and interacted with within the iCn3D interface for maximal impact. 
 
+
+![image of proposed workflow]
+(https://github.com/hackathonismb/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/blob/develop/slides/Team%202A.png)
+
 ## Preliminary outcomes
 
 
