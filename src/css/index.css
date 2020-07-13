@@ -83,6 +83,14 @@ section.header div.menu div.options span.option:hover {
 section.main div.image-container {
     width: 1000px;
     height: 600px;
-    border: 1px solid dodgerblue;
+    border: 1px solid #b0dab9;
     margin: 10px auto;
+}
+
+canvas {
+    display: block;
+    width: 800px;
+    height: 600px;
+    margin: auto;
+    border: 1px solid #b0dab9;
 }
