@@ -29,8 +29,7 @@ The creation of contact maps will be a necessary mediator to downstream differen
 Ultimately, all outcomes will need to be easily visualized and interacted with within the iCn3D interface for maximal impact. 
 
 
-![image of proposed workflow]
-(https://github.com/hackathonismb/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/blob/develop/slides/Team%202A.png)
+![image of proposed workflow](https://github.com/hackathonismb/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/blob/develop/slides/Team%202A.png)
 
 ## Preliminary outcomes
 
