@@ -36,37 +36,49 @@ def tableHTMLtoMatrix(filename):
  ofile1=open(struct+"_NumContact.csv","w")
  ofile2=open(struct+"_MinDistance.csv","w")
  ofile3=open(struct+"_C-alphaDistance.csv","w")
+ ofile4=open(struct+"_atom-pairs.csv","w")
  ofile1.write(","+','.join(Enodes)+ '\r\n')
  ofile2.write(","+','.join(Enodes)+ '\r\n')
  ofile3.write(","+','.join(Enodes)+ '\r\n')
+ ofile4.write(","+','.join(Enodes)+ '\r\n')
  for A in dict:
-  row1,row2,row3=A,A,A
+  row1,row2,row3,row4=A,A,A,A
   for E in Enodes:
    if E not in dict[A]:
     row1+=",0"
     row2+=",0"
     row3+=",0"
+    row4+=",0"
    else:
     if len(dict[A][E]) == 1 and len(dict[A][E][0]) == 4:
      row1+=","+dict[A][E][0][0]
      row2+=","+dict[A][E][0][1]
      row3+=","+dict[A][E][0][2]
+     row4+=","+dict[A][E][0][3]
     elif len(dict[A][E]) ==  1 and len(dict[A][E][0]) < 4:
      row1+=",0"
      row2+=","+dict[A][E][0][0]
      row3+=",0"
+     row4+=","+dict[A][E][0][1]
     elif len(dict[A][E]) > 1:
+     row4+=","
      for grp in dict[A][E]:
       if len(grp) == 4:
        row1+=","+grp[0]
        row2+=","+grp[1]
        row3+=","+grp[2]
+       row4+=grp[3]+"_"
+      else:
+       row4+=grp[1]+"_"
+     row4=row4.strip("_")
   ofile1.write(row1+"\r\n")
   ofile2.write(row2+"\r\n")
   ofile3.write(row3+"\r\n")
+  ofile4.write(row4+"\r\n")
  ofile1.close()
  ofile2.close()
  ofile3.close()
+ ofile4.close()
 
 tableHTMLtoMatrix(filename)
 
