@@ -14,11 +14,11 @@ section.header {
     position: relative;
 }
 
-section.header span.title {
-    font-size: 32px;
-    color: white;
-    line-height: 120px;
-    margin-left: 16px;
+#logo {
+    width: 320px;
+    height: auto;
+    margin-left: 42px;
+    margin-top: 20px;
 }
 
 section.header div.menu-bar {
