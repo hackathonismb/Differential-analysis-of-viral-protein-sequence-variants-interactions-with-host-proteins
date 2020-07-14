@@ -1,4 +1,4 @@
-import {initializeCanvas} from "./setup.js";
+import {initializeCanvas, setupScale} from "./setup.js";
 import config from "../utils/config.js";
 import colors from "../utils/colors.js";
 
@@ -73,6 +73,15 @@ export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}) 
       updateContactMap(ctx, false);
       canvas.infoPanel.classList.remove('live');
     });
+  });
+
+  window.addEventListener('scroll', () => {
+    if (window.devicePixelRatio !== ctx.devicePixelRatio) {
+      setupScale(ctx);
+      requestAnimationFrame(() => {
+        updateContactMap(ctx, true);
+      });
+    }
   });
 }
 
