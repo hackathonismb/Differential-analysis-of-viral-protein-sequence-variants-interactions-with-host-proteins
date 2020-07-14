@@ -44,15 +44,6 @@ Contact Maps allow easy discernment of changing binding patterns
 
 ### Creation of Numbering system
 
-### Establishing Contact Maps
-
-Contact Maps allow easy discernment of changing binding patterns
-![Contact Maps](https://github.com/hackathonismb/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/blob/develop/figures/Contact1.png)
-
-![Contact Maps](https://github.com/hackathonismb/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/blob/develop/figures/Contact2.png) 
-
-### Creation of Numbering system
-
 
 ## Future development
 
