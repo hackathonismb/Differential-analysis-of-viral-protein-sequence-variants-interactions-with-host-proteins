@@ -24,13 +24,18 @@ export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}) 
   let w = gridWidth * (data.x.length + 1) + config.margin.left + config.margin.right;
   let h = gridWidth * (data.y.length + 1) + config.margin.top + config.margin.bottom;
   let ctx = initializeCanvas(canvas, {width: w, height: h});
+
   ctx.data = data;
+  ctx.selectedTypes = [...(new Set(Object.values(data.data).map(d => d.type)))].sort();
   ctx.highlighted = false;
 
   canvas.infoPanel = document.getElementById('info-panel');
 
   requestAnimationFrame(() => {
     updateContactMap(ctx, true);
+    requestAnimationFrame(() => {
+      createTypeOptions(ctx);
+    })
   });
 
   canvas.addEventListener('contextmenu', evt => {
@@ -158,7 +163,7 @@ function updateContactMap(ctx, required, pos = {x: 0, y: 0}) {
   for (let i = 0; i < data.x.length; i++) {
     for (let j = 0; j < data.y.length; j++) {
       let obj = data.data[`${data.x[i]}-${data.y[j]}`];
-      if (obj.value) {
+      if (obj.value && ctx.selectedTypes.includes(obj.type)) {
         if (ctx.highlighted && i === m && j === n) {
           ctx.fillStyle = getColor(obj.type, true);
           ctx.shadowColor = ctx.fillStyle;
@@ -200,5 +205,38 @@ function updateInfoPanel(panel, obj, pos = {top: 0, left: 0}) {
   let i = 0;
   for (let span of spans) {
     span.innerText = `${values[i++]}`;
+  }
+}
+
+function createTypeOptions(ctx) {
+  let types = ctx.selectedTypes;
+  let ts = document.getElementById('type-options');
+  while (ts.lastChild) {
+    ts.removeChild(ts.lastChild);
+  }
+  for (let type of types) {
+    let span = ts.appendChild(document.createElement('span'));
+    span.classList.add('type-option');
+    let inp = span.appendChild(document.createElement('input'));
+    inp.type = 'checkbox';
+    inp.checked = true;
+    inp.setAttribute('id', `type-${type}`);
+    inp.value = type;
+    inp.addEventListener('change', () => {
+      let arr = [];
+      let opts = ts.getElementsByClassName('type-option');
+      for (let opt of opts) {
+        if (opt.firstChild.checked) {
+          arr.push(opt.firstChild.value);
+        }
+      }
+      ctx.selectedTypes = arr;
+      requestAnimationFrame(() => {
+        updateContactMap(ctx, true);
+      });
+    });
+    let label = span.appendChild(document.createElement('label'));
+    label.setAttribute('for', inp.id);
+    label.innerText = type;
   }
 }
