@@ -20,19 +20,21 @@ let getColor = colors();
  */
 export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}) {
   let gridWidth = config.gridWidth;
-  // the size of the grid plus margins
-  let w = gridWidth * (data.x.length + 1) + config.margin.left + config.margin.right;
-  let h = gridWidth * (data.y.length + 1) + config.margin.top + config.margin.bottom;
+  canvas.innerWidth = gridWidth * (data.x.length + 1);
+  canvas.innerHeight = gridWidth * (data.y.length + 1);
+  // the size of the grid plus margins, the canvas element
+  let w = canvas.innerWidth + config.margin.left + config.margin.right;
+  let h = canvas.innerHeight + config.margin.top + config.margin.bottom;
   let ctx = initializeCanvas(canvas, {width: w, height: h});
 
   ctx.data = data;
   ctx.selectedTypes = [...(new Set(Object.values(data.data).map(d => d.type)))].sort();
-  ctx.highlighted = false;
+  ctx.highlighted = [undefined, undefined];
 
   canvas.infoPanel = document.getElementById('info-panel');
 
   requestAnimationFrame(() => {
-    updateContactMap(ctx, true);
+    updateContactMap(ctx, {x: 0, y: 0}, true);
     requestAnimationFrame(() => {
       createTypeOptions(ctx);
     })
@@ -41,13 +43,9 @@ export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}) 
   canvas.addEventListener('contextmenu', evt => {
     evt.preventDefault();
     let rect = canvas.getBoundingClientRect();
-    let x = evt.clientX - rect.left - config.margin.left + config.lineWidth / 2;
-    let y = evt.clientY - rect.top - config.margin.top + config.lineWidth / 2;
-    let m = getIndex(x, w, gridWidth, config.circleRadius);
-    let n = getIndex(y, h, gridWidth, config.circleRadius);
+    let [m, n] = getIndexes(canvas.innerWidth, canvas.innerHeight, {x: evt.clientX - rect.left, y: evt.clientY - rect.top});
     let obj = data.data[`${data.x[m]}-${data.y[n]}`];
-    ctx.highlighted = m > -1 && n > -1 && obj.value;
-    if (ctx.highlighted) {
+    if (m > -1 && n > -1 && obj.value) {
       canvas.infoPanel.classList.add('live');
       updateInfoPanel(canvas.infoPanel, obj, {left: evt.clientX, top: evt.clientY});
     }
@@ -56,7 +54,7 @@ export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}) 
   canvas.addEventListener('mouseover', evt => {
     let rect = canvas.getBoundingClientRect();
     requestAnimationFrame(() => {
-      updateContactMap(ctx, false, {
+      updateContactMap(ctx, {
         x: evt.clientX - rect.left,
         y: evt.clientY - rect.top,
       });
@@ -66,7 +64,7 @@ export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}) 
   canvas.addEventListener('mousemove', evt => {
     let rect = canvas.getBoundingClientRect();
     requestAnimationFrame(() => {
-      updateContactMap(ctx, true, {
+      updateContactMap(ctx, {
         x: evt.clientX - rect.left,
         y: evt.clientY - rect.top,
       });
@@ -75,7 +73,7 @@ export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}) 
   });
   canvas.addEventListener('mouseleave', () => {
     requestAnimationFrame(() => {
-      updateContactMap(ctx, false);
+      updateContactMap(ctx);
       canvas.infoPanel.classList.remove('live');
     });
   });
@@ -84,28 +82,35 @@ export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}) 
     if (window.devicePixelRatio !== ctx.devicePixelRatio) {
       setupScale(ctx);
       requestAnimationFrame(() => {
-        updateContactMap(ctx, true);
+        updateContactMap(ctx);
       });
     }
   });
 }
 
-function updateContactMap(ctx, required, pos = {x: 0, y: 0}) {
-  let data = ctx.data;
+/**
+ * update canvas
+ * @param ctx
+ * @param pos: the position of event in canvas coordinates
+ * @param required: if true, update the canvas even if highlighted status not change
+ */
+function updateContactMap(ctx, pos = {x: 0, y: 0}, required=false) {
+  let w = ctx.canvas.innerWidth;
+  let h = ctx.canvas.innerHeight;
 
-  let gridWidth = config.gridWidth;
-  // the real size of the grid
-  let w = gridWidth * (data.x.length + 1);
-  let h = gridWidth * (data.y.length + 1);
+  let [p, q] = ctx.highlighted;
+  let [m, n] = getIndexes(w, h, pos);
+  ctx.highlighted = [m, n];
 
-  let x = pos.x - config.margin.left + config.lineWidth / 2;
-  let y = pos.y - config.margin.top + config.lineWidth / 2;
-  let m = getIndex(x, w, gridWidth, config.circleRadius);
-  let n = getIndex(y, h, gridWidth, config.circleRadius);
-  ctx.highlighted = m > -1 && n > -1 && data.data[`${data.x[m]}-${data.y[n]}`].value;
-
-  if (!ctx.highlighted && !required) {
+  if (p === m && q === n && !required) {
     return;
+  }
+
+  let data = ctx.data;
+  let gridWidth = config.gridWidth;
+  let flag = false;
+  if (data.data[`${data.x[m]}-${data.y[n]}`]) {
+    flag = data.data[`${data.x[m]}-${data.y[n]}`].value;
   }
 
   ctx.save();
@@ -125,7 +130,7 @@ function updateContactMap(ctx, required, pos = {x: 0, y: 0}) {
   // ctx.save();
   for (let i = 0; i < data.x.length; i++) {
     ctx.save();
-    if (ctx.highlighted && i === m) {
+    if (flag && i === m) {
       ctx.fillStyle = config.textHighlightColor;
       ctx.strokeStyle = config.lineHighlightColor;
     } else {
@@ -144,7 +149,7 @@ function updateContactMap(ctx, required, pos = {x: 0, y: 0}) {
     ctx.restore();
   }
   for (let i = 0; i < data.y.length; i++) {
-    if (ctx.highlighted && i === n) {
+    if (flag && i === n) {
       ctx.fillStyle = config.textHighlightColor;
       ctx.strokeStyle = config.lineHighlightColor;
     } else {
@@ -164,7 +169,7 @@ function updateContactMap(ctx, required, pos = {x: 0, y: 0}) {
     for (let j = 0; j < data.y.length; j++) {
       let obj = data.data[`${data.x[i]}-${data.y[j]}`];
       if (obj.value && ctx.selectedTypes.includes(obj.type)) {
-        if (ctx.highlighted && i === m && j === n) {
+        if (flag && i === m && j === n) {
           ctx.fillStyle = getColor(obj.type, true);
           ctx.shadowColor = ctx.fillStyle;
           ctx.shadowBlur = 8;
@@ -180,6 +185,24 @@ function updateContactMap(ctx, required, pos = {x: 0, y: 0}) {
   }
 
   ctx.restore();
+}
+
+/**
+ * get the x and y index of the highlighted circle, if no highlighted, then [-1, -1]
+ * @param w: the width of the content area (grids)
+ * @param h: the height of the content area (grids)
+ * @param pos
+ * @returns {(number|*)[]}
+ */
+function getIndexes(w, h, pos) {
+  let gridWidth = config.gridWidth;
+
+  let x = pos.x - config.margin.left + config.lineWidth / 2;
+  let y = pos.y - config.margin.top + config.lineWidth / 2;
+  let m = getIndex(x, w, gridWidth, config.circleRadius);
+  let n = getIndex(y, h, gridWidth, config.circleRadius);
+
+  return [m, n];
 }
 
 function getIndex(d, max, unit, r) {
@@ -232,7 +255,7 @@ function createTypeOptions(ctx) {
       }
       ctx.selectedTypes = arr;
       requestAnimationFrame(() => {
-        updateContactMap(ctx, true);
+        updateContactMap(ctx, {x: 0, y: 0}, true);
       });
     });
     let label = span.appendChild(document.createElement('label'));
