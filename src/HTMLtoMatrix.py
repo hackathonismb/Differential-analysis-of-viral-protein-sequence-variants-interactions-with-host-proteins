@@ -90,12 +90,12 @@ def linegraphtoMatrix(filename):
    resid2=ln[2].split("</title>")[0].strip().split("_")[0]
    struct=resid1.split(".")[-1]
    if resid1 not in dict[struct]:
-    dict[struct][resid1]={resid2:interaction}
+    dict[struct][resid1]={resid2:[interaction]}
    else:
     if resid2 not in dict[struct][resid1]:
-     dict[struct][resid1][resid2]=interaction
-    elif resid2 in dict[struct][resid1] and interaction != "contact":
-     dict[struct][resid1][resid2]=interaction
+     dict[struct][resid1][resid2]=[interaction]
+    elif resid2 in dict[struct][resid1]:
+     dict[struct][resid1][resid2].append(interaction)
 
  for struct in dict:
   outfile=open(struct+"_matrix.csv","w")
@@ -106,8 +106,11 @@ def linegraphtoMatrix(filename):
     if i not in dict[struct][A]:
      row+=",0"
     else:
-     row+=","+dict[struct][A][i]
+     interaction=""
+     for j in dict[struct][A][i]:
+      interaction+=j+"_"
+     row+=","+interaction.strip("_")
    outfile.write(row+"\r\n")
   outfile.close()
 
-#linegraphtoMatrix(filename)
+#linegraphtoMatrix(filename) #using 6M0J-2AJF-linegraph.html from Link 10
