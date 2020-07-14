@@ -1,4 +1,4 @@
-![Contact Maps](https://github.com/hackathonismb/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/blob/develop/figures/hack_deltamol3d_logo_1B.png)
+![Contact Maps](https://github.com/hackathonismb/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/blob/develop/figures/logo_deltamol3d.png)
 
 # Differential analysis of viral protein sequence variants interactions with host proteins 
 
