@@ -1,9 +1,11 @@
 const config = {
   lineWidth: 2,
+  lineDash: [1, 3],
   gridWidth: 30,
   circleRadius: 12,
   textColor: '#666',
   textHighlightColor: '#f66',
+  textMargin: 20,
   font: '18px monospace',
   lineColor: 'rgba(233, 234, 100, .6)',
   lineHighlightColor: 'rgba(233, 234, 25, .8)',

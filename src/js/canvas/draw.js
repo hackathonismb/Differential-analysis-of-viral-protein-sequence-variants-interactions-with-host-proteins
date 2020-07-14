@@ -101,11 +101,10 @@ function updateContactMap(ctx, required, pos = {x: 0, y: 0}) {
   ctx.translate(config.margin.left - config.lineWidth / 2, config.margin.top - config.lineWidth / 2);
   ctx.strokeRect(0, 0, w, h);
 
-  ctx.setLineDash([1, 3]);
+  ctx.setLineDash(config.lineDash);
   ctx.lineDashOffset = [0, 0];
   ctx.lineCap = 'butt';
   ctx.textBaseline = 'middle';
-  ctx.textAlign = 'right';
   ctx.font = config.font;
   ctx.fillStyle = config.textColor;
 
@@ -126,7 +125,8 @@ function updateContactMap(ctx, required, pos = {x: 0, y: 0}) {
     ctx.closePath();
     ctx.stroke();
     ctx.rotate(-(Math.PI / 2));
-    ctx.fillText(data.x[i], 20, 0);
+    ctx.textAlign = 'left';
+    ctx.fillText(data.x[i], config.textMargin, 0);
     ctx.restore();
   }
   for (let i = 0; i < data.y.length; i++) {
@@ -142,7 +142,8 @@ function updateContactMap(ctx, required, pos = {x: 0, y: 0}) {
     ctx.lineTo(w, (i + 1) * gridWidth);
     ctx.closePath();
     ctx.stroke();
-    ctx.fillText(data.y[i], -10, (i + 1) * gridWidth);
+    ctx.textAlign = 'right';
+    ctx.fillText(data.y[i], -config.textMargin, (i + 1) * gridWidth);
   }
   ctx.fillStyle = config.circleColor;
   for (let i = 0; i < data.x.length; i++) {
