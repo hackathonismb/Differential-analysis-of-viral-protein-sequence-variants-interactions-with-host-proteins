@@ -146,6 +146,19 @@ div.switch-controller.network span.switcher.network-graph {
     border-bottom: 2px solid floralwhite;
 }
 
+div.type-selector {
+    width: 80%;
+    height: 42px;
+    line-height: 42px;
+    margin: auto;
+    text-align: center;
+}
+
+span.type-option {
+    display: inline-block;
+    margin-left: 20px;
+}
+
 canvas {
     display: block;
     width: 800px;
