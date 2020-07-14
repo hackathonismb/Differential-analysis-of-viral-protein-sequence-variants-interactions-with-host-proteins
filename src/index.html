@@ -20,8 +20,8 @@
         <div class="menu">
             <span>Graph</span>
             <div class="options long">
-                <span class="option">Contact map</span>
-                <span class="option">Network graph</span>
+                <span class="option" id="live">Live</span>
+                <span class="option" id="gallery">Gallery</span>
             </div>
         </div>
         <div class="menu">
@@ -35,27 +35,36 @@
         </div>
     </div>
 </section>
-<section class="main">
+<section class="main live">
+    <div class="switch-controller contact">
+        <span class="switcher contact-map">Contact map</span>
+        <span class="switcher network-graph">Network graph</span>
+    </div>
     <div class="image-container">
         <canvas id="canvas"></canvas>
         <svg id="svg"></svg>
-        <div class="info-panel" id="info-panel">
-            <div class="row">
-                <span class="prop">x:</span>
-                <span class="value"></span>
-            </div>
-            <div class="row">
-                <span class="prop">y:</span>
-                <span class="value"></span>
-            </div>
-            <div class="row">
-                <span class="prop">type:</span>
-                <span class="value"></span>
-            </div>
-            <div class="row">
-                <span class="prop">value:</span>
-                <span class="value"></span>
-            </div>
+    </div>
+    <div class="gallery-frame">
+        <span class="arrow left"></span>
+        <span class="arrow right"></span>
+        <div class="gallery-image"></div>
+    </div>
+    <div class="info-panel" id="info-panel">
+        <div class="row">
+            <span class="prop">x:</span>
+            <span class="value"></span>
+        </div>
+        <div class="row">
+            <span class="prop">y:</span>
+            <span class="value"></span>
+        </div>
+        <div class="row">
+            <span class="prop">type:</span>
+            <span class="value"></span>
+        </div>
+        <div class="row">
+            <span class="prop">value:</span>
+            <span class="value"></span>
         </div>
     </div>
 </section>

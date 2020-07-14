@@ -18,7 +18,7 @@ let getColor = colors();
  *   }
  * }
  */
-export function drawContactMap(canvas, data = {x: [], y: [], data: {}}) {
+export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}) {
   let gridWidth = config.gridWidth;
   // the size of the grid plus margins
   let w = gridWidth * (data.x.length + 1) + config.margin.left + config.margin.right;

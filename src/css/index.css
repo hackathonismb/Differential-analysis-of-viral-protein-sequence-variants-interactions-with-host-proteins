@@ -3,7 +3,7 @@ body {
     font-size: 14px;
     line-height: 1.5;
     color: #24292e;
-    background-color: rgba(239,240,241, .1);
+    background-color: floralwhite;
     margin: 0;
 }
 
@@ -81,11 +81,69 @@ section.header div.menu div.options span.option:hover {
     background-color: #DAD299;
 }
 
+section.main {
+    padding-bottom: 30px;
+}
+
+section.main.live div.image-container {
+    display: block;
+}
+
+section.main.gallery div.image-container {
+    display: none;
+}
+
+section.main.live div.gallery-frame {
+    display: none;
+}
+
+section.main.gallery div.gallery-frame {
+    display: block;
+}
+
 section.main div.image-container {
-    /*width: 1000px;*/
-    /*border: 1px solid #b0dab9;*/
     margin: 10px auto;
     position: relative;
+}
+
+section.main div.gallery-frame {
+    width: 80%;
+    min-height: 600px;
+    margin: -2px auto;
+    border: 2px solid #b0dab9;
+    border-top: 0 solid transparent;
+}
+
+div.switch-controller {
+    height: 60px;
+    border-bottom: 2px solid #b0dab9;
+    width: 80%;
+    margin: auto;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+span.switcher {
+    display: inline-block;
+    height: 36px;
+    line-height: 36px;
+    border-radius: 8px 8px 0 0;
+    margin-left: 20px;
+    margin-top: 22px;
+    padding: 0 12px;
+    background-color: floralwhite;
+    cursor: pointer;
+}
+
+div.switch-controller.contact span.switcher.contact-map {
+    border: 2px solid #b0dab9;
+    border-bottom: 2px solid floralwhite;
+}
+
+div.switch-controller.network span.switcher.network-graph {
+    border: 2px solid #b0dab9;
+    border-bottom: 2px solid floralwhite;
 }
 
 canvas {
@@ -124,4 +182,10 @@ div.row {
 div.row span.prop {
     width: 30px;
     text-align: right;
+}
+
+div.gallery-image {
+    width: 90%;
+    height: 90%;
+    border: 1px solid #DDDDDD;
 }
