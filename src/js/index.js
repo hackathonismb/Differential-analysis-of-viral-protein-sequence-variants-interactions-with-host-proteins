@@ -1,10 +1,12 @@
 import drawContactMap from "./canvas/contact-map.js";
 import data from "./utils/sample-data.js";
+import setupDownload from "./utils/download.js";
 
 window.onload = () => {
   drawContactMap(document.getElementById('canvas'), data);
   handleModeSwitch();
   handleTabSwitch();
+  setupDownload();
 };
 
 function handleTabSwitch() {
