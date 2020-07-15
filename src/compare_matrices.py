@@ -164,7 +164,7 @@ class point:
         return point(xs,ys)
 
     def to_string(self):
-        return '{0:d},{1:d}'.format(x,y)
+        return '{0:d},{1:d}'.format(self.x,self.y)
         #return '{},{}'.format(x,y)
 
 ### RUN the code
