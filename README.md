@@ -37,12 +37,14 @@ Ultimately, all outcomes will need to be easily visualized and interacted with w
 
 ### Establishing Contact Maps
 
-Contact Maps allow easy discernment of changing binding patterns
-![Contact Maps](https://github.com/hackathonismb/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/blob/develop/figures/Contact1.png)
+Contact Maps visualize the interactions between two residues.
 
-![Contact Maps](https://github.com/hackathonismb/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/blob/develop/figures/Contact2.png) 
+![Contact Maps](https://github.com/hackathonismb/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/blob/develop/figures/Contact_Combined.png)
 
-### Creation of Numbering system
+We have created interactive contact maps wherein right-clicking connections allows you to view interaction types between two proteins. [View our interactive contact map](https://hackathonismb.github.io/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/src/)
+
+### Comparing maps from two different proteins 
+
 
 
 ## Future development
