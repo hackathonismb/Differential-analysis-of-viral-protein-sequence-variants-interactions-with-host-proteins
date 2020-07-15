@@ -71,13 +71,17 @@ section.header div.menu div.options.long {
     width: 102px;
 }
 
-section.header div.menu div.options span.option {
+section.header a.option {
+    text-decoration: none;
+}
+
+section.header div.menu div.options .option {
     padding: 0 8px;
     display: block;
     font-size: 13px;
 }
 
-section.header div.menu div.options span.option:hover {
+section.header div.menu div.options .option:hover {
     background-color: #DAD299;
 }
 
@@ -201,4 +205,10 @@ div.gallery-image {
     width: 90%;
     height: 90%;
     border: 1px solid #DDDDDD;
+}
+
+@media print {
+    .no-print {
+        display: none;
+    }
 }
