@@ -1,8 +1,6 @@
 import {initializeCanvas, setupScale} from "./setup.js";
 import config from "../utils/config.js";
-import colors from "../utils/colors.js";
-
-let getColor = colors();
+import getColor from "../utils/colors.js";
 
 /**
  * draw contact map
@@ -20,9 +18,9 @@ let getColor = colors();
  */
 export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}) {
   let gridWidth = config.gridWidth;
-  canvas.innerWidth = gridWidth * (data.x.length + 1);
-  canvas.innerHeight = gridWidth * (data.y.length + 1);
-  // the size of the grid plus margins, the canvas element
+  canvas.innerWidth = gridWidth * (data.x.length + 1); // the width of the grids
+  canvas.innerHeight = gridWidth * (data.y.length + 1); // the height of the grids
+  // the size of the grids plus margins, practically it will be the size of the canvas element
   let w = canvas.innerWidth + config.margin.left + config.margin.right;
   let h = canvas.innerHeight + config.margin.top + config.margin.bottom;
   let ctx = initializeCanvas(canvas, {width: w, height: h});
@@ -118,6 +116,7 @@ function updateContactMap(ctx, pos = {x: 0, y: 0}, required = false) {
   let flag = obj && obj.value && ctx.selectedTypes.includes(obj.type);
 
   ctx.save();
+  // ctx.clearRect(0, 0, ctx.w, ctx.h);
   ctx.fillStyle = config.backgroundColor;
   ctx.fillRect(0, 0, ctx.w, ctx.h);
 

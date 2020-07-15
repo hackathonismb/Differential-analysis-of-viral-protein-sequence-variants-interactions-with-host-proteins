@@ -1,4 +1,4 @@
-export default function colors() {
+function colors() {
   const pool = {};
   return function (type, highlight=false) {
     if (!pool[type]) {
@@ -15,3 +15,8 @@ export default function colors() {
     }
   }
 }
+
+const getColor = colors();
+
+export default getColor;
+
