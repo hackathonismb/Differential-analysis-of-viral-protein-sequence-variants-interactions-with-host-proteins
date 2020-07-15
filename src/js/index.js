@@ -1,12 +1,14 @@
 import drawContactMap from "./canvas/contact-map.js";
 import data from "./utils/sample-data.js";
 import setupDownload from "./utils/download.js";
+import setupImgSliding from "./utils/image-sliding.js";
 
 window.onload = () => {
   drawContactMap(document.getElementById('canvas'), data);
   handleModeSwitch();
   handleTabSwitch();
   setupDownload();
+  setupImgSliding();
 };
 
 function handleTabSwitch() {
