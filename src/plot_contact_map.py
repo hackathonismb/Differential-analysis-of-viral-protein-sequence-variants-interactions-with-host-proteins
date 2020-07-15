@@ -2,6 +2,7 @@
 #
 #  Generate a figure of the contact map between residues from input file.
 #
+#
 import pandas as pan
 import seaborn as sns
 import matplotlib.pyplot as plt

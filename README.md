@@ -1,6 +1,8 @@
+![Contact Maps](https://github.com/hackathonismb/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/blob/develop/figures/hack_deltamol3d_logo_1B.png)
+
 # Differential analysis of viral protein sequence variants interactions with host proteins 
 
-Project Contributors: Adriaan Ludl, Mingzhang Yang, Yuchen Ge, Yuk Kei Wan, Ariel Aptekmann, Awtum Brashear, Xavier Watkins, Tom Madej, Philippe Youkharibache
+Project Contributors: Adriaan Ludl, Mingzhang Yang, Yuchen Ge, Yuk Kei Wan, Ariel Aptekmann, Awtum Brashear, Xavier Watkins, Tom Madej, Jiyao Wang, Philippe Youkharibache
 
 ## The task at hand
 
@@ -28,12 +30,19 @@ The establishment of a reference-based numbering system that allows comparison b
 The creation of contact maps will be a necessary mediator to downstream differential analysis. 
 Ultimately, all outcomes will need to be easily visualized and interacted with within the iCn3D interface for maximal impact. 
 
-
-
-![image of proposed workflow](https://github.com/hackathonismb/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/blob/develop/slides/Team%202A.png)
+![image of proposed workflow](https://github.com/hackathonismb/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/blob/develop/figures/Team%202A.png)
 
 
 ## Preliminary outcomes
+
+### Establishing Contact Maps
+
+Contact Maps allow easy discernment of changing binding patterns
+![Contact Maps](https://github.com/hackathonismb/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/blob/develop/figures/Contact1.png)
+
+![Contact Maps](https://github.com/hackathonismb/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/blob/develop/figures/Contact2.png) 
+
+### Creation of Numbering system
 
 
 ## Future development

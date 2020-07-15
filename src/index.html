@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Differential Analysis of Viral Protein Interaction with Host</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+<section class="header">
+    <span class="title">
+        <img src="../figures/hack_deltamol3d_logo_1B.png" alt="hack-mol-3d" id="logo">
+    </span>
+    <div class="menu-bar">
+        <div class="menu">
+            <span>Import</span>
+            <div class="options">
+                <span class="option">JSON</span>
+                <span class="option">CSV</span>
+                <span class="option">TSV</span>
+            </div>
+        </div>
+        <div class="menu">
+            <span>Graph</span>
+            <div class="options long">
+                <span class="option" id="live">Live</span>
+                <span class="option" id="gallery">Gallery</span>
+            </div>
+        </div>
+        <div class="menu">
+            <span>Export</span>
+            <div class="options long">
+                <span class="option">Save as SVG</span>
+                <span class="option">Save as PNG</span>
+                <span class="option">Save as JPG</span>
+                <span class="option">Print</span>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="main live">
+    <div class="switch-controller contact">
+        <span class="switcher contact-map">Contact map</span>
+        <span class="switcher network-graph">Network graph</span>
+    </div>
+    <div class="image-container">
+        <div class="type-selector" id="type-selector">
+            <span class="type-option">Type:</span>
+            <span id="type-options">
+                <span class="type-option">
+                    <input type="checkbox" id="type-A" value="A"><label for="type-A">A</label>
+                </span>
+                <span class="type-option">
+                    <input type="checkbox" id="type-B" value="B"><label for="type-B">B</label>
+                </span>
+                <span class="type-option">
+                    <input type="checkbox" id="type-C" value="C"><label for="type-C">C</label>
+                </span>
+                <span class="type-option">
+                    <input type="checkbox" id="type-D" value="D"><label for="type-D">D</label>
+                </span>
+            </span>
+        </div>
+        <canvas id="canvas"></canvas>
+        <svg id="svg"></svg>
+    </div>
+    <div class="gallery-frame">
+        <span class="arrow left"></span>
+        <span class="arrow right"></span>
+        <div class="gallery-image"></div>
+    </div>
+    <div class="info-panel" id="info-panel">
+        <div class="row">
+            <span class="prop">x:</span>
+            <span class="value"></span>
+        </div>
+        <div class="row">
+            <span class="prop">y:</span>
+            <span class="value"></span>
+        </div>
+        <div class="row">
+            <span class="prop">type:</span>
+            <span class="value"></span>
+        </div>
+        <div class="row">
+            <span class="prop">value:</span>
+            <span class="value"></span>
+        </div>
+    </div>
+</section>
+<section class="footer">
+
+</section>
+<script type="module" src="js/index.js"></script>
+</body>
+</html>
