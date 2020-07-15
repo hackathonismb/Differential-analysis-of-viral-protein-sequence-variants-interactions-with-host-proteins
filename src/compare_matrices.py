@@ -83,14 +83,12 @@ def simple_test():
 
     #max_score_lists = min( len(list_1), len(list_2) )
     max_score_lists = min( list_1.nnz, list_2.nnz )
-    if max_score != max_score_lists :
-        print('#  Warning, mismath of max_scores. Check your data ...')
     best_score, best_translation = find_best_translation( list_1, list_2, delta )
 
     header_str = '# data set 1: ' + name1
     header_str += '\n# data set 2: ' + name2
     header_str += '\n# best score for translation:{} ; maximum possible score: {}'
-    header_str = header_str.format( best_score, max_score )
+    header_str = header_str.format( best_score, max_score_lists )
     output_path = input_path
     write_translation( output_path + 'best_translation_for_test_'+ str(n) +'.csv',
                         best_translation, header_str )
