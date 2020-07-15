@@ -29,7 +29,9 @@ export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}) 
 
   ctx.data = data;
   ctx.selectedTypes = [...(new Set(Object.values(data.data).map(d => d.type)))].sort();
-  ctx.highlighted = [undefined, undefined];
+  // the status to indicate whether the pointer is over a circle and the indexes of the circle
+  // [-1, -1] represents not hovering on a circle, [m, n] tells which circle is highlighted
+  ctx.highlighted = [-1, -1];
 
   canvas.infoPanel = document.getElementById('info-panel');
 
