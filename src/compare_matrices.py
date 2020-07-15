@@ -48,6 +48,7 @@ def main( name1, name2, delta):
     if not (mnz1 == mnz2).all():
         list_1 = convert_matrix_to_list_of_points( m1 )
         list_2 = convert_matrix_to_list_of_points( m2 )
+        #max_score_lists = min( list_1.nnz, list_2.nnz )
         max_score_lists = min( list_1.nnz, list_2.nnz )
         if max_score != max_score_lists :
             print('#  Warning, mismath of max_scores. Check your data ...')
@@ -81,8 +82,8 @@ def simple_test():
     list_1 = convert_matrix_to_list_of_points( m1 )
     list_2 = convert_matrix_to_list_of_points( m2 )
 
-    #max_score_lists = min( len(list_1), len(list_2) )
-    max_score_lists = min( list_1.nnz, list_2.nnz )
+    max_score_lists = min( len(list_1), len(list_2) )
+    #max_score_lists = min( list_1.nnz, list_2.nnz )
     best_score, best_translation = find_best_translation( list_1, list_2, delta )
 
     header_str = '# data set 1: ' + name1
@@ -120,7 +121,8 @@ def convert_matrix_to_list_of_points( m ):
 
     :returns: list of points.
     """
-    return coo_matrix(m).tolil()
+    l = coo_matrix(m).tolil()
+    return zip(l.row,l.col,l.data)
 
 def find_best_translation( list_1, list_2, delta ):
     """
