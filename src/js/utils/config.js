@@ -1,4 +1,5 @@
 const config = {
+  backgroundColor: 'white',
   lineWidth: 2,
   lineDash: [1, 3],
   gridWidth: 30,

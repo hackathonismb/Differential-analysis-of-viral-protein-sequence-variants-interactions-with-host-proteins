@@ -207,6 +207,10 @@ div.gallery-image {
     border: 1px solid #DDDDDD;
 }
 
+#download-handler {
+    display: none;
+}
+
 @media print {
     .no-print {
         display: none;
