@@ -6,9 +6,9 @@
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-<section class="header">
+<section class="header no-print">
     <span class="title">
-        <img src="../figures/hack_deltamol3d_logo_1B.png" alt="hack-mol-3d" id="logo">
+        <img src="../figures/logo_deltamol3d.png" alt="hack-mol-3d" id="logo">
     </span>
     <div class="menu-bar">
         <div class="menu">
@@ -29,16 +29,16 @@
         <div class="menu">
             <span>Export</span>
             <div class="options long">
-                <span class="option">Save as SVG</span>
-                <span class="option">Save as PNG</span>
-                <span class="option">Save as JPG</span>
-                <span class="option">Print</span>
+                <a class="option" id="save-as-svg">Save as SVG</a>
+                <a class="option" id="save-as-png">Save as PNG</a>
+                <a class="option" id="save-as-jpg">Save as JPG</a>
+                <span class="option" onclick="window.print()">Print</span>
             </div>
         </div>
     </div>
 </section>
 <section class="main live">
-    <div class="switch-controller contact">
+    <div class="switch-controller contact no-print">
         <span class="switcher contact-map">Contact map</span>
         <span class="switcher network-graph">Network graph</span>
     </div>
@@ -87,7 +87,7 @@
         </div>
     </div>
 </section>
-<section class="footer">
+<section class="footer no-print">
 
 </section>
 <script type="module" src="js/index.js"></script>

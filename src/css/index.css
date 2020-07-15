@@ -15,10 +15,10 @@ section.header {
 }
 
 #logo {
-    width: 320px;
+    width: 240px;
     height: auto;
     margin-left: 42px;
-    margin-top: 20px;
+    margin-top: 36px;
 }
 
 section.header div.menu-bar {
@@ -71,13 +71,17 @@ section.header div.menu div.options.long {
     width: 102px;
 }
 
-section.header div.menu div.options span.option {
+section.header a.option {
+    text-decoration: none;
+}
+
+section.header div.menu div.options .option {
     padding: 0 8px;
     display: block;
     font-size: 13px;
 }
 
-section.header div.menu div.options span.option:hover {
+section.header div.menu div.options .option:hover {
     background-color: #DAD299;
 }
 
@@ -107,7 +111,7 @@ section.main div.image-container {
 }
 
 section.main div.gallery-frame {
-    width: 80%;
+    width: 90%;
     min-height: 600px;
     margin: -2px auto;
     border: 2px solid #b0dab9;
@@ -117,7 +121,7 @@ section.main div.gallery-frame {
 div.switch-controller {
     height: 60px;
     border-bottom: 2px solid #b0dab9;
-    width: 80%;
+    width: 90%;
     margin: auto;
     position: relative;
     display: flex;
@@ -201,4 +205,10 @@ div.gallery-image {
     width: 90%;
     height: 90%;
     border: 1px solid #DDDDDD;
+}
+
+@media print {
+    .no-print {
+        display: none;
+    }
 }

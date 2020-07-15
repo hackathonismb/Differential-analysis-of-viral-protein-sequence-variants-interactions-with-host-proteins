@@ -8,7 +8,7 @@ const config = {
   textMargin: 20,
   font: '18px monospace',
   lineColor: 'rgba(233, 234, 100, .6)',
-  lineHighlightColor: 'rgba(233, 234, 25, .8)',
+  lineHighlightColor: 'rgba(233, 234, 20, .98)',
   circleColor: 'rgba(119,136,153, .8)',
   circleHighlightColor: 'rgba(85,102,119, .8)',
   margin: {
