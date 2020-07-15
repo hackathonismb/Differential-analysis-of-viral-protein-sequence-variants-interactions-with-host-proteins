@@ -41,7 +41,7 @@ Contact Maps visualize the interactions between two residues.
 
 ![Contact Maps](https://github.com/hackathonismb/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/blob/develop/figures/Contact_Combined.png)
 
-We have created interactive contact maps wherein right-clicking connections allows you to view interaction types between two proteins. [View our interactive contact map](https://hackathonismb.github.io/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/src/)
+We have created interactive contact maps wherein clicking connections allows you to view interaction types between two proteins. [View our interactive contact map](https://hackathonismb.github.io/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/src/)
 
 ### Comparing maps from two different proteins 
 
