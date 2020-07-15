@@ -71,10 +71,6 @@ section.header div.menu div.options.long {
     width: 102px;
 }
 
-section.header a.option {
-    text-decoration: none;
-}
-
 section.header div.menu div.options .option {
     padding: 0 8px;
     display: block;
@@ -205,6 +201,10 @@ div.gallery-image {
     width: 90%;
     height: 90%;
     border: 1px solid #DDDDDD;
+}
+
+#download-handler {
+    display: none;
 }
 
 @media print {

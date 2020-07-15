@@ -118,7 +118,8 @@ function updateContactMap(ctx, pos = {x: 0, y: 0}, required = false) {
   let flag = obj && obj.value && ctx.selectedTypes.includes(obj.type);
 
   ctx.save();
-  ctx.clearRect(0, 0, ctx.w, ctx.h);
+  ctx.fillStyle = config.backgroundColor;
+  ctx.fillRect(0, 0, ctx.w, ctx.h);
 
   ctx.strokeStyle = config.lineColor;
   ctx.translate(config.margin.left - config.lineWidth / 2, config.margin.top - config.lineWidth / 2);
