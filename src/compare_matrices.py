@@ -63,13 +63,13 @@ def main( name1, name2, delta):
                         best_translation, header_str )
 
 
-def simple_test():
+def simple_test(a):
     """TODO: Docstring for simple_test.
     Run a simple test on a block diagonal matrix with ones on the diagonal.
 
     """
     print('TODO')
-    a = 2   # size of the blocks
+    #a = 2   # size of the blocks
     n = 2*a # size of the full matrix
     block_shape = (a,a)
 
@@ -90,7 +90,11 @@ def simple_test():
     header_str += '\n# data set 2: ' + name2
     header_str += '\n# best score for translation:{} ; maximum possible score: {}'
     header_str = header_str.format( best_score, max_score_lists )
-    output_path = input_path
+
+    print(header_str)
+    print('best translation is: ', best_translation.to_string())
+
+    output_path = './'
     write_translation( output_path + 'best_translation_for_test_'+ str(n) +'.csv',
                         best_translation, header_str )
 
@@ -121,8 +125,18 @@ def convert_matrix_to_list_of_points( m ):
 
     :returns: list of points.
     """
-    l = coo_matrix(m).tolil()
-    return zip(l.row,l.col,l.data)
+    #l = coo_matrix(m).tolil()
+    #print('lil matrix type')
+    #print(l)
+    #return zip(l.row,l.col,l.data)
+    l = coo_matrix(m)
+    print('coo matrix type')
+    print(coo_matrix(m))
+    m_list = []
+    for i,j,v in zip(l.row,l.col,l.data):
+        m_list.append( point(i,j,v)  )
+    return m_list
+
 
 def find_best_translation( list_1, list_2, delta ):
     """
@@ -190,7 +204,7 @@ class point:
         return abs(self.x - q.x) + abs(self.y - q.y)
 
     def is_close_to(self, q, delta):
-        return man_distance(self,q) <= delta
+        return self.man_distance(q) <= delta
 
     def add(self, q):
         xs = self.x + q.x
@@ -206,7 +220,12 @@ class point:
         return '{0:d},{1:d}'.format(self.x,self.y)
         #return '{},{}'.format(x,y)
 
+from datetime import datetime
+
+t0 = datetime.now()
+print(t0)
 ### RUN the code
-simple_test()
+simple_test(2*4*20)
+print(datetime.now() - t0)
 #main( name1, name2, delta )
 # EOF.
