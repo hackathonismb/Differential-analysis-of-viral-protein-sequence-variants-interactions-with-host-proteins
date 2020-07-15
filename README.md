@@ -38,12 +38,14 @@ Ultimately, all outcomes will need to be easily visualized and interacted with w
 ### Establishing Contact Maps
 
 Contact Maps visualize the interactions between two residues. Visualizing contact maps of an individual protein allows immediate visual comparison between how two proteins interact with a third protein. 
+
 ![Contact Maps](https://github.com/hackathonismb/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/blob/develop/figures/Contact1.png)
 
 ![Contact Maps](https://github.com/hackathonismb/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/blob/develop/figures/Contact2.png) 
 
 We have created interactive contact maps wherein right-clicking connections allows you to view interaction types.
-![html site](https://hackathonismb.github.io/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/src/)
+
+[interactive contact map!](https://hackathonismb.github.io/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/src/)
 
 
 ## Future development
