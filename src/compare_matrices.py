@@ -45,10 +45,10 @@ def main( name1, name2, delta):
     max_score = min( n1, n2 )
 
     best_score, best_translation = max_score, point(0,0)
-    if not (mnz1 == mnz2).all(): 
+    if not (mnz1 == mnz2).all():
         list_1 = convert_matrix_to_list_of_points( m1 )
         list_2 = convert_matrix_to_list_of_points( m2 )
-        max_score_lists = min( len(list_1), len(list_2) )
+        max_score_lists = min( list_1.nnz, list_2.nnz )
         if max_score != max_score_lists :
             print('#  Warning, mismath of max_scores. Check your data ...')
         best_score, best_translation = find_best_translation( list_1, list_2, delta )
@@ -59,7 +59,42 @@ def main( name1, name2, delta):
     header_str = header_str.format( best_score, max_score )
     output_path = input_path
     write_translation( output_path + 'best_translation_for_'+ name1 +'_'+name2+'.csv',
-                        best_translation, header_str ) 
+                        best_translation, header_str )
+
+
+def simple_test():
+    """TODO: Docstring for simple_test.
+    Run a simple test on a block diagonal matrix with ones on the diagonal.
+
+    """
+    print('TODO')
+    a = 2   # size of the blocks
+    n = 2*a # size of the full matrix
+    block_shape = (a,a)
+
+    import numpy as np
+    id_a = np.identity( a )
+    zeros_a = np.zeros( block_shape )
+
+    m1 = np.block( [ [ id_a, zeros_a], [ zeros_a, zeros_a ] ] ) # a block matrix ...
+    m2 = np.block( [ [ zeros_a, zeros_a], [ zeros_a, id_a ] ] ) # a block matrix ...
+    list_1 = convert_matrix_to_list_of_points( m1 )
+    list_2 = convert_matrix_to_list_of_points( m2 )
+
+    #max_score_lists = min( len(list_1), len(list_2) )
+    max_score_lists = min( list_1.nnz, list_2.nnz )
+    if max_score != max_score_lists :
+        print('#  Warning, mismath of max_scores. Check your data ...')
+    best_score, best_translation = find_best_translation( list_1, list_2, delta )
+
+    header_str = '# data set 1: ' + name1
+    header_str += '\n# data set 2: ' + name2
+    header_str += '\n# best score for translation:{} ; maximum possible score: {}'
+    header_str = header_str.format( best_score, max_score )
+    output_path = input_path
+    write_translation( output_path + 'best_translation_for_test_'+ str(n) +'.csv',
+                        best_translation, header_str )
+
 
 def load_data_as_array( name_of_data, data_path ):
     """
@@ -76,7 +111,6 @@ def load_data_as_array( name_of_data, data_path ):
     df = pan.read_csv( data_path + name_of_data + suffix, 
                         index_col=0 )
     return df.to_numpy()
-     
 
 def convert_matrix_to_list_of_points( m ):
     """
@@ -108,14 +142,13 @@ def find_best_translation( list_1, list_2, delta ):
     for p1 in list_1:
         for p2 in list_2:
             # translation: p2 to p1
-            if p2.is_close_to(p1,delta):
-                tr = p1.subtract(p1)
+            #if p2.is_close_to(p1,delta):
+                tr = p1.subtract(p2)
                 list_tr = apply_translation(list_2, tr)
-    
                 count=0
                 for p3 in list_tr:
                     for p4 in list_1:
-                        if p0.is_close_to(p3,delta):
+                        if p4.is_close_to(p3,delta):
                             count += 1
                 if count > best_score:
                     best_score = count
@@ -142,7 +175,8 @@ def apply_translation( list0, pt0 ):
     list_moved = []
     for p in list0:
         # pm = p.subtract( pt0 )
-        list_moved.append( p.subtract( pt0 ) )
+        #list_moved.append( p.subtract( pt0 ) )
+        list_moved.append( p.add( pt0 ) )
     return list_moved
 
 
@@ -156,11 +190,16 @@ class point:
         return abs(self.x - q.x) + abs(self.y - q.y)
 
     def is_close_to(self, q, delta):
-        return man_distance(self,q) < delta
+        return man_distance(self,q) <= delta
+
+    def add(self, q):
+        xs = self.x + q.x
+        ys = self.y + q.y
+        return point(xs,ys)
 
     def subtract(self, q):
-        xs = self.x - q.x 
-        ys = self.y - q.y 
+        xs = self.x - q.x
+        ys = self.y - q.y
         return point(xs,ys)
 
     def to_string(self):
@@ -168,5 +207,6 @@ class point:
         #return '{},{}'.format(x,y)
 
 ### RUN the code
-main( name1, name2, delta )
+simple_test()
+#main( name1, name2, delta )
 # EOF.
