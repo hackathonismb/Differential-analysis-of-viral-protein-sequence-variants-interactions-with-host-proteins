@@ -1,3 +1,5 @@
+import contactMapSVG from "../svg/contact-map.js";
+
 export default function setupDownload() {
   let hl = document.getElementById('download-handler');
   document.getElementById('save-as-jpg').addEventListener('click', function() {
@@ -11,6 +13,12 @@ export default function setupDownload() {
     hl.click();
   });
   document.getElementById('save-as-svg').addEventListener('click', function() {
-
+    contactMapSVG(document.getElementById('canvas').getContext('2d').data);
+    let svg = document.getElementById('svg');
+    let pre = '<?xml version="1.0" standalone="no"?>\r\n';
+    let blob = new Blob([pre, svg.outerHTML], {type: 'image/svg+xml;charset=utf-8'});
+    hl.href = URL.createObjectURL(blob);
+    hl.setAttribute('download', 'you-name-it.svg');
+    hl.click();
   });
 }

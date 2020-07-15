@@ -168,6 +168,7 @@ canvas {
 
 svg {
     display: none;
+    margin: auto;
 }
 
 .info-panel {
