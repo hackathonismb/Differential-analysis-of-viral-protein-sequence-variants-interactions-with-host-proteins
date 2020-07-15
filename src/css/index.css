@@ -1,5 +1,5 @@
 body {
-    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
     font-size: 14px;
     line-height: 1.5;
     color: #24292e;
@@ -9,6 +9,7 @@ body {
 
 section.header {
     width: 100vm;
+    min-width: 960px;
     height: 120px;
     background-image: linear-gradient(141deg, #DAD299 0%, #b0dab9 75%);
     position: relative;
@@ -42,7 +43,7 @@ section.header div.menu {
     display: block;
     text-align: center;
     color: white;
-    background-color: rgba(128,128,255, .6);
+    background-color: rgba(128, 128, 255, .6);
     position: relative;
     border-radius: 4px;
     cursor: pointer;
@@ -51,7 +52,7 @@ section.header div.menu {
 }
 
 section.header div.menu:hover {
-    background-color: rgba(128,128,255, .8);
+    background-color: rgba(128, 128, 255, .8);
     overflow: visible;
 }
 
@@ -81,6 +82,10 @@ section.header div.menu div.options .option:hover {
     background-color: #DAD299;
 }
 
+/**
+* main section logic
+ */
+
 section.main {
     padding-bottom: 30px;
 }
@@ -98,26 +103,19 @@ section.main.live div.gallery-frame {
 }
 
 section.main.gallery div.gallery-frame {
-    display: block;
+    display: flex;
 }
 
-section.main div.image-container {
-    margin: 10px auto;
-    position: relative;
-}
 
-section.main div.gallery-frame {
-    width: 90%;
-    min-height: 600px;
-    margin: -2px auto;
-    border: 2px solid #b0dab9;
-    border-top: 0 solid transparent;
-}
+/**
+*  tab switch controller
+ */
 
 div.switch-controller {
     height: 60px;
     border-bottom: 2px solid #b0dab9;
     width: 90%;
+    min-width: 960px;
     margin: auto;
     position: relative;
     display: flex;
@@ -146,8 +144,13 @@ div.switch-controller.network span.switcher.network-graph {
     border-bottom: 2px solid floralwhite;
 }
 
+/**
+* type selector
+ */
+
 div.type-selector {
     width: 80%;
+    min-width: 756px;
     height: 42px;
     line-height: 42px;
     margin: auto;
@@ -157,6 +160,15 @@ div.type-selector {
 span.type-option {
     display: inline-block;
     margin-left: 20px;
+}
+
+/**
+* image container
+ */
+
+section.main div.image-container {
+    margin: 10px auto;
+    position: relative;
 }
 
 canvas {
@@ -171,6 +183,9 @@ svg {
     margin: auto;
 }
 
+/**
+* info-panel
+ */
 .info-panel {
     width: 120px;
     height: 100px;
@@ -198,10 +213,122 @@ div.row span.prop {
     text-align: right;
 }
 
-div.gallery-image {
+/**
+* gallery-frame
+ */
+
+section.main div.gallery-frame {
     width: 90%;
-    height: 90%;
-    border: 1px solid #DDDDDD;
+    min-width: 960px;
+    min-height: 600px;
+    margin: -2px auto;
+    padding: 42px 0;
+    border: 2px solid #b0dab9;
+    border-top: 0 solid transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+div.gallery-frame div.arrow {
+    display: block;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+}
+
+div.gallery-frame div.arrow:hover {
+    background-color: coral;
+}
+
+div.gallery-frame div.arrow::before {
+    content: "";
+    box-sizing: border-box;
+    display: block;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 11px;
+    transform: rotate(45deg);
+}
+
+div.gallery-frame div.arrow.left::before {
+    border-left: 4px solid coral;
+    border-bottom: 4px solid coral;
+    left: 14px;
+}
+
+div.gallery-frame div.arrow.right::before {
+    border-right: 4px solid coral;
+    border-top: 4px solid coral;
+    right: 14px;
+}
+
+div.gallery-frame div.arrow:hover::before {
+    border-color: white;
+}
+
+div.gallery-image {
+    width: 800px;
+    min-height: 600px;
+    border: 1px solid #eeeeee;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+    padding: 20px 0;
+}
+
+div.gallery-frame div.gallery-image img {
+    display: block;
+    transition: all 1.6s;
+    width: 60%;
+    height: auto;
+    margin: auto;
+    position: absolute;
+    left: 20%;
+    opacity: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: 2px -2px 12px #888888;
+}
+
+div.gallery-frame div.gallery-image img.current {
+    opacity: 1;
+}
+
+div.gallery-frame div.gallery-image img.gone {
+    left: -120%;
+}
+
+
+#dots-wrapper {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    transform: translateY(-100%);
+}
+
+#dots-wrapper .dot {
+    display: block;
+    width: 10px;
+    height: 10px;
+    margin: 0 4px;
+    border-radius: 50%;
+    background-color: #888888;
+    cursor: pointer;
+}
+
+#dots-wrapper .dot.active {
+    background-color: coral;
+}
+
+#image-title {
+    position: absolute;
+    bottom: 0;
 }
 
 #download-handler {
