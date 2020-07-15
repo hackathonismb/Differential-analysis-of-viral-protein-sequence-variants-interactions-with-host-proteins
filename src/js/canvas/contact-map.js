@@ -44,38 +44,35 @@ export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}) 
 
   canvas.addEventListener('contextmenu', evt => {
     evt.preventDefault();
+  });
+
+  canvas.addEventListener('click', evt => {
     let rect = canvas.getBoundingClientRect();
-    let [m, n] = getIndexes(canvas.innerWidth, canvas.innerHeight, {
-      x: evt.clientX - rect.left,
-      y: evt.clientY - rect.top
-    });
+    let data = ctx.data;
+    let [m, n] = getIndexes(canvas.innerWidth, canvas.innerHeight, {x: evt.x - rect.left, y: evt.y - rect.top});
     let obj = data.data[`${data.x[m]}-${data.y[n]}`];
-    if (m > -1 && n > -1 && obj.value) {
-      canvas.infoPanel.classList.add('live');
-      updateInfoPanel(canvas.infoPanel, obj, {left: evt.clientX, top: evt.clientY});
+    if (obj && obj.value && ctx.selectedTypes.includes(obj.type)) {
+      requestAnimationFrame(() => {
+        updateContactMap(ctx, {
+          x: evt.clientX,
+          y: evt.clientY,
+        });
+        ctx.canvas.infoPanel.classList.add('live');
+        updateInfoPanel(ctx.canvas.infoPanel, obj, {left: evt.x, top: evt.y});
+      });
     }
   });
 
-  canvas.addEventListener('mouseover', evt => {
-    let rect = canvas.getBoundingClientRect();
-    requestAnimationFrame(() => {
-      updateContactMap(ctx, {
-        x: evt.clientX - rect.left,
-        y: evt.clientY - rect.top,
-      });
-      canvas.infoPanel.classList.remove('live');
-    })
-  });
   canvas.addEventListener('mousemove', evt => {
-    let rect = canvas.getBoundingClientRect();
     requestAnimationFrame(() => {
       updateContactMap(ctx, {
-        x: evt.clientX - rect.left,
-        y: evt.clientY - rect.top,
+        x: evt.clientX,
+        y: evt.clientY,
       });
-      canvas.infoPanel.classList.remove('live');
+      ctx.canvas.infoPanel.classList.remove('live');
     })
   });
+
   canvas.addEventListener('mouseleave', () => {
     requestAnimationFrame(() => {
       updateContactMap(ctx);
@@ -88,6 +85,7 @@ export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}) 
       setupScale(ctx);
       requestAnimationFrame(() => {
         updateContactMap(ctx);
+        ctx.canvas.infoPanel.classList.remove('live');
       });
     }
   });
@@ -96,15 +94,16 @@ export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}) 
 /**
  * update canvas
  * @param ctx
- * @param pos: the position of event in canvas coordinates
+ * @param pos: the position of event in client coordinates system, namely, evt.x and evt.y
  * @param required: if true, update the canvas even if highlighted status not change
  */
 function updateContactMap(ctx, pos = {x: 0, y: 0}, required = false) {
   let w = ctx.canvas.innerWidth;
   let h = ctx.canvas.innerHeight;
+  let rect = ctx.canvas.getBoundingClientRect();
 
   let [p, q] = ctx.highlighted;
-  let [m, n] = getIndexes(w, h, pos);
+  let [m, n] = getIndexes(w, h, {x: pos.x - rect.left, y: pos.y - rect.top});
   ctx.highlighted = [m, n];
 
   if (p === m && q === n && !required) {
