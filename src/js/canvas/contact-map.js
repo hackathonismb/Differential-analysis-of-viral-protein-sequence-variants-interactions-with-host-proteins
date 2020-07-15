@@ -28,7 +28,7 @@ export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}) 
   let ctx = initializeCanvas(canvas, {width: w, height: h});
 
   ctx.data = data;
-  ctx.selectedTypes = [...(new Set(Object.values(data.data).map(d => d.type)))].sort();
+  ctx.selectedTypes = [...(new Set(Object.values(data.data).map(d => d.type)))].filter(d => d).sort();
   // the status to indicate whether the pointer is over a circle and the indexes of the circle
   // [-1, -1] represents not hovering on a circle, [m, n] tells which circle is highlighted
   ctx.highlighted = [-1, -1];
@@ -45,7 +45,10 @@ export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}) 
   canvas.addEventListener('contextmenu', evt => {
     evt.preventDefault();
     let rect = canvas.getBoundingClientRect();
-    let [m, n] = getIndexes(canvas.innerWidth, canvas.innerHeight, {x: evt.clientX - rect.left, y: evt.clientY - rect.top});
+    let [m, n] = getIndexes(canvas.innerWidth, canvas.innerHeight, {
+      x: evt.clientX - rect.left,
+      y: evt.clientY - rect.top
+    });
     let obj = data.data[`${data.x[m]}-${data.y[n]}`];
     if (m > -1 && n > -1 && obj.value) {
       canvas.infoPanel.classList.add('live');
@@ -96,7 +99,7 @@ export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}) 
  * @param pos: the position of event in canvas coordinates
  * @param required: if true, update the canvas even if highlighted status not change
  */
-function updateContactMap(ctx, pos = {x: 0, y: 0}, required=false) {
+function updateContactMap(ctx, pos = {x: 0, y: 0}, required = false) {
   let w = ctx.canvas.innerWidth;
   let h = ctx.canvas.innerHeight;
 
@@ -110,10 +113,10 @@ function updateContactMap(ctx, pos = {x: 0, y: 0}, required=false) {
 
   let data = ctx.data;
   let gridWidth = config.gridWidth;
-  let flag = false;
-  if (data.data[`${data.x[m]}-${data.y[n]}`]) {
-    flag = data.data[`${data.x[m]}-${data.y[n]}`].value;
-  }
+  let obj = data.data[`${data.x[m]}-${data.y[n]}`]; // if m or n is -1 or both are -1 then obj will be undefined
+  // flag determines whether to light up a circle
+  // the first conditional is obj itself, true only if both m and n are valid indexes and that x[m] and y[n] interacts
+  let flag = obj && obj.value && ctx.selectedTypes.includes(obj.type);
 
   ctx.save();
   ctx.clearRect(0, 0, ctx.w, ctx.h);
@@ -169,14 +172,15 @@ function updateContactMap(ctx, pos = {x: 0, y: 0}, required=false) {
   ctx.fillStyle = config.circleColor;
   for (let i = 0; i < data.x.length; i++) {
     for (let j = 0; j < data.y.length; j++) {
-      let obj = data.data[`${data.x[i]}-${data.y[j]}`];
-      if (obj.value && ctx.selectedTypes.includes(obj.type)) {
+      // we need to consider the current object, not the one used to determine whether to light up
+      let o = data.data[`${data.x[i]}-${data.y[j]}`];
+      if (ctx.selectedTypes.includes(o.type) && o.value) {
         if (flag && i === m && j === n) {
-          ctx.fillStyle = getColor(obj.type, true);
+          ctx.fillStyle = getColor(o.type, true);
           ctx.shadowColor = ctx.fillStyle;
           ctx.shadowBlur = 8;
         } else {
-          ctx.fillStyle = getColor(obj.type, false);
+          ctx.fillStyle = getColor(o.type, false);
         }
         ctx.beginPath();
         ctx.arc((i + 1) * gridWidth, (j + 1) * gridWidth, config.circleRadius, 0, Math.PI * 2);

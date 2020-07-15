@@ -8,5 +8,5 @@ export default function contactMapSVG(data={x: [], y: [], data: {}}) {
   svg.setAttribute('height', canvas.clientHeight + '');
   const xmlns = "http://www.w3.org/2000/svg";
   let g = svg.appendChild(document.createElementNS(xmlns, 'g'));
-  
+
 }
