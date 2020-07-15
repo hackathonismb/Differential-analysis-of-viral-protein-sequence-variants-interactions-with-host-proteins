@@ -6,7 +6,7 @@ def tableHTMLtoMatrix(filename):
   file.readline()
  all_lines=file.readline().split("</td></tr></tbody></table></td></tr></thead>")
  entries=all_lines[1].split('<tr align="center">')
- contacts,specials,Enodes={},{},[]
+ dict,Enodes={},[]
  for entry in entries[1:]:
   entry=entry.strip('<th>').split('Highlight')[:-1]
   for sets in entry:
@@ -21,36 +21,64 @@ def tableHTMLtoMatrix(filename):
    if resE[0] not in Enodes:
     Enodes.append(resE[0])
    Elist=[s.replace('</td>', '') for s in Elist[1:]]
-   Elist.append(resA[1])
-   Elist.append(resE[1])
-   if classA == "div0_inter2_0":
-    if resA[0] not in contacts:
-     contacts[resA[0]]={resE[0]:Elist}
-    else:
-     if resE[0] not in contacts[resA[0]]:
-      contacts[resA[0]][resE[0]]=Elist
+   Elist.append(resA[1]+"-"+resE[1])
+   if len(Elist) < 4:
+    bond=classA.split("_")[1][:-1]
+    Elist.append(bond)
+   if resA[0] not in dict:
+    dict[resA[0]]={resE[0]:[Elist]}
    else:
-    Elist.append(classA.split("_")[1][:-1]+"_"+Elist[0]+"Å")
-    if resA[0] not in specials:
-     specials[resA[0]]={resE[0]:Elist}
+    if resE[0] not in dict[resA[0]]:
+     dict[resA[0]][resE[0]]=[Elist]
     else:
-     if resE[0] not in specials[resA[0]]:
-      specials[resA[0]][resE[0]]=Elist
+     dict[resA[0]][resE[0]].append(Elist)
  struct=filename.split("-")[0]
- outfile=open(struct+"_matrix.csv","w")
- outfile.write(","+','.join(Enodes)+ '\r\n')
- for A in contacts:
-  row=A
-  for i in Enodes:
-   if i not in contacts[A]:
-    row+=",0"
+ ofile1=open(struct+"_NumContact.csv","w")
+ ofile2=open(struct+"_MinDistance.csv","w")
+ ofile3=open(struct+"_C-alphaDistance.csv","w")
+ ofile4=open(struct+"_atom-pairs.csv","w")
+ ofile1.write(","+','.join(Enodes)+ '\r\n')
+ ofile2.write(","+','.join(Enodes)+ '\r\n')
+ ofile3.write(","+','.join(Enodes)+ '\r\n')
+ ofile4.write(","+','.join(Enodes)+ '\r\n')
+ for A in dict:
+  row1,row2,row3,row4=A,A,A,A
+  for E in Enodes:
+   if E not in dict[A]:
+    row1+=",0"
+    row2+=",0"
+    row3+=",0"
+    row4+=",0"
    else:
-    L=contacts[A][i]
-    details="#contacts: "+L[0]+" ;MinDistance: "+L[1]+"Å ;C-alphaDistance: "+L[2]+"Å ;y_atom: "+L[3]+";x_atom: "+L[4]
-    if A in specials and i in specials[A]:
-     details+=" ;interaction: "+specials[A][i][-1]
-    row+=","+details
-  outfile.write(row+"\r\n")
+    if len(dict[A][E]) == 1 and len(dict[A][E][0]) == 4:
+     row1+=","+dict[A][E][0][0]
+     row2+=","+dict[A][E][0][1]
+     row3+=","+dict[A][E][0][2]
+     row4+=","+dict[A][E][0][3]
+    elif len(dict[A][E]) ==  1 and len(dict[A][E][0]) < 4:
+     row1+=",0"
+     row2+=","+dict[A][E][0][0]
+     row3+=",0"
+     row4+=","+dict[A][E][0][1]
+    elif len(dict[A][E]) > 1:
+     row4+=","
+     for grp in dict[A][E]:
+      if len(grp) == 4:
+       row1+=","+grp[0]
+       row2+=","+grp[1]
+       row3+=","+grp[2]
+       row4+=grp[3]+"_"
+      else:
+       row4+=grp[1]+"_"
+     row4=row4.strip("_")
+  ofile1.write(row1+"\r\n")
+  ofile2.write(row2+"\r\n")
+  ofile3.write(row3+"\r\n")
+  ofile4.write(row4+"\r\n")
+ ofile1.close()
+ ofile2.close()
+ ofile3.close()
+ ofile4.close()
 
 tableHTMLtoMatrix(filename)
 
@@ -90,12 +118,12 @@ def linegraphtoMatrix(filename):
    resid2=ln[2].split("</title>")[0].strip().split("_")[0]
    struct=resid1.split(".")[-1]
    if resid1 not in dict[struct]:
-    dict[struct][resid1]={resid2:interaction}
+    dict[struct][resid1]={resid2:[interaction]}
    else:
     if resid2 not in dict[struct][resid1]:
-     dict[struct][resid1][resid2]=interaction
-    elif resid2 in dict[struct][resid1] and interaction != "contact":
-     dict[struct][resid1][resid2]=interaction
+     dict[struct][resid1][resid2]=[interaction]
+    elif resid2 in dict[struct][resid1]:
+     dict[struct][resid1][resid2].append(interaction)
 
  for struct in dict:
   outfile=open(struct+"_matrix.csv","w")
@@ -106,8 +134,11 @@ def linegraphtoMatrix(filename):
     if i not in dict[struct][A]:
      row+=",0"
     else:
-     row+=","+dict[struct][A][i]
+     interaction=""
+     for j in dict[struct][A][i]:
+      interaction+=j+"_"
+     row+=","+interaction.strip("_")
    outfile.write(row+"\r\n")
   outfile.close()
 
-#linegraphtoMatrix(filename)
+#linegraphtoMatrix(filename) #using 6M0J-2AJF-linegraph.html from Link 10
