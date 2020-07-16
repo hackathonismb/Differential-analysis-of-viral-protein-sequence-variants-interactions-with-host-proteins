@@ -15,14 +15,17 @@ import getColor from "../utils/colors.js";
  *     ...
  *   }
  * }
+ * @options: custom option
  */
-export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}) {
-  let gridWidth = config.gridWidth;
+export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}, options={}) {
+  let opt = Object.assign({}, config, options);
+  canvas.config = opt;
+  let gridWidth = opt.gridWidth;
   canvas.innerWidth = gridWidth * (data.x.length + 1); // the width of the grids
   canvas.innerHeight = gridWidth * (data.y.length + 1); // the height of the grids
   // the size of the grids plus margins, practically it will be the size of the canvas element
-  let w = canvas.innerWidth + config.margin.left + config.margin.right;
-  let h = canvas.innerHeight + config.margin.top + config.margin.bottom;
+  let w = canvas.innerWidth + opt.margin.left + opt.margin.right;
+  let h = canvas.innerHeight + opt.margin.top + opt.margin.bottom;
   let ctx = initializeCanvas(canvas, {width: w, height: h});
 
   ctx.data = data;
@@ -47,7 +50,7 @@ export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}) 
   canvas.addEventListener('click', evt => {
     let rect = canvas.getBoundingClientRect();
     let data = ctx.data;
-    let [m, n] = getIndexes(canvas.innerWidth, canvas.innerHeight, {x: evt.x - rect.left, y: evt.y - rect.top});
+    let [m, n] = getIndexes(canvas.config, canvas.innerWidth, canvas.innerHeight, {x: evt.x - rect.left, y: evt.y - rect.top});
     let obj = data.data[`${data.x[m]}-${data.y[n]}`];
     if (obj && obj.value && ctx.selectedTypes.includes(obj.type)) {
       requestAnimationFrame(() => {
@@ -101,7 +104,7 @@ function updateContactMap(ctx, pos = {x: 0, y: 0}, required = false) {
   let rect = ctx.canvas.getBoundingClientRect();
 
   let [p, q] = ctx.highlighted;
-  let [m, n] = getIndexes(w, h, {x: pos.x - rect.left, y: pos.y - rect.top});
+  let [m, n] = getIndexes(ctx.canvas.config, w, h, {x: pos.x - rect.left, y: pos.y - rect.top});
   ctx.highlighted = [m, n];
 
   if (p === m && q === n && !required) {
@@ -109,7 +112,8 @@ function updateContactMap(ctx, pos = {x: 0, y: 0}, required = false) {
   }
 
   let data = ctx.data;
-  let gridWidth = config.gridWidth;
+  let opt = ctx.canvas.config;
+  let gridWidth = opt.gridWidth;
   let obj = data.data[`${data.x[m]}-${data.y[n]}`]; // if m or n is -1 or both are -1 then obj will be undefined
   // flag determines whether to light up a circle
   // the first conditional is obj itself, true only if both m and n are valid indexes and that x[m] and y[n] interacts
@@ -117,29 +121,29 @@ function updateContactMap(ctx, pos = {x: 0, y: 0}, required = false) {
 
   ctx.save();
   // ctx.clearRect(0, 0, ctx.w, ctx.h);
-  ctx.fillStyle = config.backgroundColor;
+  ctx.fillStyle = opt.backgroundColor;
   ctx.fillRect(0, 0, ctx.w, ctx.h);
 
-  ctx.strokeStyle = config.lineColor;
-  ctx.translate(config.margin.left - config.lineWidth / 2, config.margin.top - config.lineWidth / 2);
+  ctx.strokeStyle = opt.lineColor;
+  ctx.translate(opt.margin.left - opt.lineWidth / 2, opt.margin.top - opt.lineWidth / 2);
   ctx.strokeRect(0, 0, w, h);
 
-  ctx.setLineDash(config.lineDash);
+  ctx.setLineDash(opt.lineDash);
   ctx.lineDashOffset = [0, 0];
   ctx.lineCap = 'butt';
   ctx.textBaseline = 'middle';
-  ctx.font = config.font;
-  ctx.fillStyle = config.textColor;
+  ctx.font = opt.font;
+  ctx.fillStyle = opt.textColor;
 
   // ctx.save();
   for (let i = 0; i < data.x.length; i++) {
     ctx.save();
     if (flag && i === m) {
-      ctx.fillStyle = config.textHighlightColor;
-      ctx.strokeStyle = config.lineHighlightColor;
+      ctx.fillStyle = opt.textHighlightColor;
+      ctx.strokeStyle = opt.lineHighlightColor;
     } else {
-      ctx.fillStyle = config.textColor;
-      ctx.strokeStyle = config.lineColor;
+      ctx.fillStyle = opt.textColor;
+      ctx.strokeStyle = opt.lineColor;
     }
     ctx.translate((i + 1) * gridWidth, 0);
     ctx.beginPath();
@@ -149,16 +153,16 @@ function updateContactMap(ctx, pos = {x: 0, y: 0}, required = false) {
     ctx.stroke();
     ctx.rotate(-(Math.PI / 2));
     ctx.textAlign = 'left';
-    ctx.fillText(data.x[i], config.textMargin, 0);
+    ctx.fillText(data.x[i], opt.textMargin, 0);
     ctx.restore();
   }
   for (let i = 0; i < data.y.length; i++) {
     if (flag && i === n) {
-      ctx.fillStyle = config.textHighlightColor;
-      ctx.strokeStyle = config.lineHighlightColor;
+      ctx.fillStyle = opt.textHighlightColor;
+      ctx.strokeStyle = opt.lineHighlightColor;
     } else {
-      ctx.fillStyle = config.textColor;
-      ctx.strokeStyle = config.lineColor;
+      ctx.fillStyle = opt.textColor;
+      ctx.strokeStyle = opt.lineColor;
     }
     ctx.beginPath();
     ctx.moveTo(0, (i + 1) * gridWidth);
@@ -166,9 +170,9 @@ function updateContactMap(ctx, pos = {x: 0, y: 0}, required = false) {
     ctx.closePath();
     ctx.stroke();
     ctx.textAlign = 'right';
-    ctx.fillText(data.y[i], -config.textMargin, (i + 1) * gridWidth);
+    ctx.fillText(data.y[i], -opt.textMargin, (i + 1) * gridWidth);
   }
-  ctx.fillStyle = config.circleColor;
+  ctx.fillStyle = opt.circleColor;
   for (let i = 0; i < data.x.length; i++) {
     for (let j = 0; j < data.y.length; j++) {
       // we need to consider the current object, not the one used to determine whether to light up
@@ -182,7 +186,7 @@ function updateContactMap(ctx, pos = {x: 0, y: 0}, required = false) {
           ctx.fillStyle = getColor(o.type, false);
         }
         ctx.beginPath();
-        ctx.arc((i + 1) * gridWidth, (j + 1) * gridWidth, config.circleRadius, 0, Math.PI * 2);
+        ctx.arc((i + 1) * gridWidth, (j + 1) * gridWidth, opt.circleRadius, 0, Math.PI * 2);
         ctx.fill();
         ctx.shadowBlur = 0;
       }
@@ -199,13 +203,11 @@ function updateContactMap(ctx, pos = {x: 0, y: 0}, required = false) {
  * @param pos
  * @returns {(number|*)[]}
  */
-function getIndexes(w, h, pos) {
-  let gridWidth = config.gridWidth;
-
-  let x = pos.x - config.margin.left + config.lineWidth / 2;
-  let y = pos.y - config.margin.top + config.lineWidth / 2;
-  let m = getIndex(x, w, gridWidth, config.circleRadius);
-  let n = getIndex(y, h, gridWidth, config.circleRadius);
+function getIndexes(opt, w, h, pos) {
+  let x = pos.x - opt.margin.left + opt.lineWidth / 2;
+  let y = pos.y - opt.margin.top + opt.lineWidth / 2;
+  let m = getIndex(x, w, opt.gridWidth, opt.circleRadius);
+  let n = getIndex(y, h, opt.gridWidth, opt.circleRadius);
 
   return [m, n];
 }
