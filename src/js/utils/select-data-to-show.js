@@ -2,8 +2,6 @@ import sampleData from "./sample-data.js";
 import {labels, values} from "./real-data.js";
 import drawContactMap from "../canvas/contact-map.js";
 
-console.log(values);
-
 export default function load() {
   let d = document.getElementById('data');
   let selected = d.options[d.selectedIndex].value;
