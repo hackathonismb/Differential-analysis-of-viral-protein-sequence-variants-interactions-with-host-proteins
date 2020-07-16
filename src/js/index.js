@@ -2,9 +2,10 @@ import drawContactMap from "./canvas/contact-map.js";
 import data from "./utils/sample-data.js";
 import setupDownload from "./utils/download.js";
 import setupImgSliding from "./utils/image-sliding.js";
+import load from "./utils/select-data-to-show.js";
 
 window.onload = () => {
-  drawContactMap(document.getElementById('canvas'), data, 'info-panel', 'type-options');
+  load();
   handleModeSwitch();
   handleTabSwitch();
   setupDownload();

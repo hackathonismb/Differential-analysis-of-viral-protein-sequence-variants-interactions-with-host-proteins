@@ -45,6 +45,14 @@
         <span class="switcher network-graph">Network graph</span>
     </div>
     <div class="image-container">
+        <div class="data-selector">
+            <label for="data">Choose data to show:</label>
+            <select name="cars" id="data">
+                <option value="sample-data" selected>fake sample data</option>
+                <option value="common-values">Common Values</option>
+                <option value="common-labels">Common Labels</option>
+            </select>
+        </div>
         <div class="type-selector" id="type-selector">
             <span class="type-option">Type:</span>
             <span id="type-options">

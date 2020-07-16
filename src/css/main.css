@@ -62,6 +62,16 @@ div.switch-controller.network span.switcher.network-graph {
 }
 
 /**
+* data selector
+ */
+
+.data-selector {
+    position: absolute;
+    top: 12px;
+    left: 6%;
+}
+
+/**
 * type selector
  */
 
@@ -77,6 +87,10 @@ div.type-selector {
 span.type-option {
     display: inline-block;
     margin-left: 20px;
+}
+
+.hidden {
+    transform: translateX(1000%);
 }
 
 /**

@@ -928,7 +928,7 @@ const commonValues = {
   }
 };
 
-function transform(obj) {
+function transform(obj, src='labels') {
   let res = {
     x: [],
     y: [],
@@ -939,11 +939,46 @@ function transform(obj) {
     if (!res.x.includes(key)) {
       res.x.push(key);
     }
-    for (let y of obj[key]) {
-      if (!res.y.includes(y)) {
-        res.y.push(y);
+    let ks = Object.keys(obj[key]);
+    for (let k of ks) {
+      if (!res.y.includes(k)) {
+        res.y.push(k);
       }
-      res.data[`${key}-${y}`] = obj[key][y];
+      let v = obj[key][k];
+      if (src === 'labels') {
+        if (v === 'nan') {
+          res.data[`${key}-${k}`] = {
+            value: 0,
+            x: key,
+            y: k,
+            type: ''
+          };
+        } else {
+          res.data[`${key}-${k}`] = {
+            type: v,
+            value: 1,
+            x: key,
+            y: k,
+          };
+        }
+      } else {
+        if (!v) {
+          res.data[`${key}-${k}`] = {
+            value: 0,
+            type: '',
+            x: key,
+            y: k,
+          };
+        } else {
+          res.data[`${key}-${k}`] = {
+            type: v,
+            value: 1,
+            x: key,
+            y: k,
+          };
+        }
+      }
+
     }
   }
   return res;
