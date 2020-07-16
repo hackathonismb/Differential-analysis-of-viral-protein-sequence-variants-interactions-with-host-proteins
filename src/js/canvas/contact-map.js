@@ -1,6 +1,7 @@
 import {initializeCanvas, setupScale} from "./setup.js";
 import config from "../utils/config.js";
 import getColor from "../utils/colors.js";
+import {randomInt} from "../utils/misc.js";
 
 /**
  * draw contact map
@@ -17,7 +18,7 @@ import getColor from "../utils/colors.js";
  * }
  * @options: custom option
  */
-export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}, options={}) {
+export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}, infoPanelId, typeFilterId, options={}) {
   let opt = Object.assign({}, config, options);
   canvas.config = opt;
   let gridWidth = opt.gridWidth;
@@ -34,12 +35,12 @@ export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}, 
   // [-1, -1] represents not hovering on a circle, [m, n] tells which circle is highlighted
   ctx.highlighted = [-1, -1];
 
-  canvas.infoPanel = document.getElementById('info-panel');
+  canvas.infoPanel = document.getElementById(infoPanelId);
 
   requestAnimationFrame(() => {
     updateContactMap(ctx, {x: 0, y: 0}, true);
     requestAnimationFrame(() => {
-      createTypeOptions(ctx);
+      createTypeOptions(ctx, typeFilterId);
     })
   });
 
@@ -238,9 +239,9 @@ function updateInfoPanel(panel, obj, pos = {top: 0, left: 0}) {
   }
 }
 
-function createTypeOptions(ctx) {
+function createTypeOptions(ctx, id) {
   let types = ctx.selectedTypes;
-  let ts = document.getElementById('type-options');
+  let ts = document.getElementById(id);
   while (ts.lastChild) {
     ts.removeChild(ts.lastChild);
   }
@@ -250,7 +251,7 @@ function createTypeOptions(ctx) {
     let inp = span.appendChild(document.createElement('input'));
     inp.type = 'checkbox';
     inp.checked = true;
-    inp.setAttribute('id', `type-${type}`);
+    inp.setAttribute('id', `type-${type}-${randomInt()}`);
     inp.value = type;
     inp.addEventListener('change', () => {
       let arr = [];

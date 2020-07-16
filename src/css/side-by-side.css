@@ -11,6 +11,7 @@ section.main section.panel {
     position: relative;
     box-sizing: border-box;
     min-height: 600px;
+    position: relative;
 }
 
 section.panel.left {
@@ -19,4 +20,9 @@ section.panel.left {
 
 section.panel.right {
     border-left: 1px solid #DDDDDD;
+}
+
+canvas {
+    display: block;
+    margin: auto;
 }

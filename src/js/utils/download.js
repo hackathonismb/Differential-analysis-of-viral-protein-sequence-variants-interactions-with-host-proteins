@@ -13,7 +13,7 @@ export default function setupDownload() {
     hl.click();
   });
   document.getElementById('save-as-svg').addEventListener('click', function() {
-    contactMapSVG(document.getElementById('canvas').getContext('2d').data);
+    contactMapSVG('svg', document.getElementById('canvas').getContext('2d').data);
     let svg = document.getElementById('svg');
     let pre = '<?xml version="1.0" standalone="no"?>\r\n';
     let blob = new Blob([pre, svg.outerHTML], {type: 'image/svg+xml;charset=utf-8'});

@@ -100,35 +100,7 @@ svg {
     margin: auto;
 }
 
-/**
-* info-panel
- */
-.info-panel {
-    width: 120px;
-    height: 100px;
-    padding: 10px 0;
-    position: fixed;
-    margin-top: -122px;
-    display: none;
-    background-color: #eeeeee;
-    border-radius: 6px;
-    color: mediumpurple;
-    flex-direction: column;
-    justify-content: space-around;
-}
 
-.info-panel.live {
-    display: flex;
-}
-
-div.row {
-    margin: 0 20px;
-}
-
-div.row span.prop {
-    width: 30px;
-    text-align: right;
-}
 
 /**
 * gallery-frame
