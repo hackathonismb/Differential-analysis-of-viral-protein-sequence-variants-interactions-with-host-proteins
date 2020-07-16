@@ -90,7 +90,9 @@ span.type-option {
 }
 
 .hidden {
-    transform: translateX(1000%);
+    transform-origin: 100% 100%;
+    transform: scaleX(.01);
+    opacity: 0;
 }
 
 /**
