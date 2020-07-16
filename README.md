@@ -37,14 +37,16 @@ Ultimately, all outcomes will need to be easily visualized and interacted with w
 
 ### Establishing Contact Maps
 
-Contact Maps visualize the interactions between two residues.
+Contact Maps visualize the interactions between two residues. By plotting one protein on the X axis and one protein on the Y axis we can create a view of protein binding which can be intuitively compared. 
 
-![Contact Maps]()
+![Contact Maps](https://github.com/hackathonismb/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/blob/develop/figures/Contact_Combined.png)
 
 We have created interactive contact maps wherein clicking connections allows you to view interaction types between two proteins. [View our interactive contact map](https://hackathonismb.github.io/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/src/)
 
 ### Comparing maps from two different proteins 
+ In order to compare two contact maps we used an algorithm which finds common patterns between two maps, which you can control the stringency of using an overlap cut-off distance parameter, thereby allowing some variability in protein sizes. The output allows easy understanding of the differences between binding patterns.
 
+![Algorithm Summary and Output](https://github.com/hackathonismb/Differential-analysis-of-viral-protein-sequence-variants-interactions-with-host-proteins/blob/develop/figures/Git_Algorithm_And_Result.png)
 
 
 ## Future development
