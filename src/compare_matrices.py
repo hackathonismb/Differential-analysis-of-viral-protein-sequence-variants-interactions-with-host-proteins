@@ -6,27 +6,40 @@
     (eg. representing adjacency matrices).
 
     :TODO:
-    A possible extension, instead of considering only translations p1 - p2,
+
+    0: Make output useful:
+           - apply the translation and obtain the common matrix,
+           - output the common matrix to file,
+           - output list of conserved or unique interactions.
+
+    1: find a way to obtain union of m1 and m2 ...
+
+    2: A possible extension, instead of considering only translations p1 - p2,
     we could also consider  translations p2 -> points close to p1.
+
+    3: implement further tests of the alignment, eg a random matrix and the same matrix with small perturbations ...
 
     Algorithm proposed by Tom Madej.
     Implemented by Adriaan Ludl.
 
     (ISMB viralHackathon 2020)
-    2020.07.15
+    2020.07.16
 """
+import numpy as np
 import pandas as pan
 from scipy.sparse import coo_matrix
+
+from datetime import datetime
 import sys
-name1=sys.argv[1]
-name2=sys.argv[2]
-delta=int(sys.argv[3])
+#name1=sys.argv[1]
+#name2=sys.argv[2]
+#delta=int(sys.argv[3])
 
 def main( name1, name2, delta):
     """
     Main function:
       - load the data specified by input arguments,
-      - find best translation,
+      - find best translation (of rows and columns) on matrix 2 to align with matrix 1,
       - write the best solution to an output file.
 
     Inputs:
@@ -34,9 +47,16 @@ def main( name1, name2, delta):
     :name2: str, name of the second input data set,
     :delta:  integer, the tolerance for closeness.
     """
-    input_path = '../data/distance_matrices_fromInteractionSortedHTML/'
-    m1 = load_data_as_array( name1, input_path )
-    m2 = load_data_as_array( name2, input_path )
+    #input_path = '../data/distance_matrices_fromInteractionSortedHTML/'
+    input_path = '../data/contact_distance_matrices_fromInteractionSortedHTML/NumContact/'
+    suffix = '_NumContact.csv'
+
+    m1 = load_data_as_array( name1, input_path, suffix )
+    m2 = load_data_as_array( name2, input_path, suffix )
+
+    #
+    #   TODO: find a way to obtain union of m1 and m2 ...
+    #
 
     mnz1 = m1!=0
     mnz2 = m2!=0
@@ -45,30 +65,41 @@ def main( name1, name2, delta):
     max_score = min( n1, n2 )
 
     best_score, best_translation = max_score, point(0,0)
-    if not (mnz1 == mnz2).all():
+    #if not (mnz1 == mnz2).all():
+    if not np.array_equal( mnz1, mnz2 ):
         list_1 = convert_matrix_to_list_of_points( m1 )
         list_2 = convert_matrix_to_list_of_points( m2 )
         #max_score_lists = min( list_1.nnz, list_2.nnz )
-        max_score_lists = min( list_1.nnz, list_2.nnz )
+        max_score_lists = min( len(list_1), len(list_2) )
         if max_score != max_score_lists :
             print('#  Warning, mismath of max_scores. Check your data ...')
         best_score, best_translation = find_best_translation( list_1, list_2, delta )
 
     header_str = '# data set 1: ' + name1
     header_str += '\n# data set 2: ' + name2
-    header_str += '\n# best score for translation:{} ; maximum possible score: {}'
+    header_str += '\n# best score for translation: {} ; maximum possible score: {}'
     header_str = header_str.format( best_score, max_score )
+
+    print(header_str)
+    print('best translation is: ', best_translation.to_string())
+
     output_path = input_path
-    write_translation( output_path + 'best_translation_for_'+ name1 +'_'+name2+'.csv',
+    write_translation( output_path + 'best_translation_for_'+ name1 +'_'+name2+'_delta_'+str(delta)+'.csv',
                         best_translation, header_str )
 
+    #
+    #   :TODO:
+    #       - apply the translation and obtain the common matrix,
+    #       - output the common matrix to file,
+    #       - output list of conserved or unique interactions.
+    #
+    
 
 def simple_test(a):
-    """TODO: Docstring for simple_test.
+    """ Docstring for simple_test.
     Run a simple test on a block diagonal matrix with ones on the diagonal.
 
     """
-    print('TODO')
     #a = 2   # size of the blocks
     n = 2*a # size of the full matrix
     block_shape = (a,a)
@@ -99,7 +130,7 @@ def simple_test(a):
                         best_translation, header_str )
 
 
-def load_data_as_array( name_of_data, data_path ):
+def load_data_as_array( name_of_data, data_path, suffix = '_distance_matrix.csv' ):
     """
     Load the data named as input, from the path given
     as a list of point objects.
@@ -110,7 +141,6 @@ def load_data_as_array( name_of_data, data_path ):
 
     :returns: numpy array.
     """
-    suffix = '_distance_matrix.csv'
     df = pan.read_csv( data_path + name_of_data + suffix, 
                         index_col=0 )
     return df.to_numpy()
@@ -130,8 +160,8 @@ def convert_matrix_to_list_of_points( m ):
     #print(l)
     #return zip(l.row,l.col,l.data)
     l = coo_matrix(m)
-    print('coo matrix type')
-    print(coo_matrix(m))
+    #print('coo matrix type')
+    #print(coo_matrix(m))
     m_list = []
     for i,j,v in zip(l.row,l.col,l.data):
         m_list.append( point(i,j,v)  )
@@ -220,12 +250,23 @@ class point:
         return '{0:d},{1:d}'.format(self.x,self.y)
         #return '{},{}'.format(x,y)
 
-from datetime import datetime
-
+#
+#
+#
 t0 = datetime.now()
-print(t0)
+print('# Started at :',t0)
+
 ### RUN the code
-simple_test(2*4*20)
-print(datetime.now() - t0)
-#main( name1, name2, delta )
+#simple_test(2*4*20)
+#simple_test(20)
+
+name1='6M0J'
+name2='2AJF'
+delta=1
+main( name1, name2, delta )
+
+print('#    it took:', datetime.now() - t0)
+t0 = datetime.now()
+print('# Finished at :',t0)
+
 # EOF.
