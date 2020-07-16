@@ -3,8 +3,9 @@ import getColor from "../utils/colors.js";
 
 const xmlns = "http://www.w3.org/2000/svg";
 
-export default function contactMapSVG(data={x: [], y: [], data: {}}) {
-  let svg = document.getElementById('svg');
+export default function contactMapSVG(id, data={x: [], y: [], data: {}}, options={}) {
+  let opt = Object.assign({}, config, options);
+  let svg = document.getElementById(id);
   while (svg.lastChild) {
     svg.removeChild(svg.lastChild);
   }
@@ -17,13 +18,13 @@ export default function contactMapSVG(data={x: [], y: [], data: {}}) {
   bg.setAttributeNS(null, 'y', 0);
   bg.setAttributeNS(null, 'width', canvas.clientWidth + '');
   bg.setAttributeNS(null, 'height', canvas.clientHeight + '');
-  bg.setAttributeNS(null, 'fill', config.backgroundColor);
+  bg.setAttributeNS(null, 'fill', opt.backgroundColor);
 
   let g = svg.appendChild(document.createElementNS(xmlns, 'g'));
-  g.setAttributeNS(null,'transform', `translate(${config.margin.left - config.lineWidth / 2}, ${config.margin.top - config.lineWidth / 2})`);
-  g.setAttributeNS(null, 'font-family', config.font.split(' ')[1]);
-  g.setAttributeNS(null, 'font-size', config.font.split(' ')[0]);
-  g.setAttributeNS(null, 'stroke-width', config.lineWidth);
+  g.setAttributeNS(null,'transform', `translate(${opt.margin.left - opt.lineWidth / 2}, ${opt.margin.top - opt.lineWidth / 2})`);
+  g.setAttributeNS(null, 'font-family', opt.font.split(' ')[1]);
+  g.setAttributeNS(null, 'font-size', opt.font.split(' ')[0]);
+  g.setAttributeNS(null, 'stroke-width', opt.lineWidth);
 
   let w = canvas.innerWidth;
   let h = canvas.innerHeight;
@@ -32,25 +33,25 @@ export default function contactMapSVG(data={x: [], y: [], data: {}}) {
   rect.setAttributeNS(null, 'y', 0);
   rect.setAttributeNS(null, 'width', w);
   rect.setAttributeNS(null, 'height', h);
-  rect.setAttributeNS(null, 'stroke', config.lineColor);
-  rect.setAttributeNS(null, 'fill', config.backgroundColor);
+  rect.setAttributeNS(null, 'stroke', opt.lineColor);
+  rect.setAttributeNS(null, 'fill', opt.backgroundColor);
 
-  let gridWidth = config.gridWidth;
+  let gridWidth = opt.gridWidth;
   for (let i = 0; i < data.x.length; i++) {
     let line = g.appendChild(document.createElementNS(xmlns, 'line'));
     line.setAttributeNS(null, 'x1', `${(i + 1) * gridWidth}`);
     line.setAttributeNS(null, 'y1', '0');
     line.setAttributeNS(null, 'x2', `${(i + 1) * gridWidth}`);
     line.setAttributeNS(null, 'y2', `${h}`);
-    line.setAttributeNS(null, 'stroke', config.lineColor);
-    line.setAttributeNS(null, 'stroke-dasharray', config.lineDash.join(' '));
+    line.setAttributeNS(null, 'stroke', opt.lineColor);
+    line.setAttributeNS(null, 'stroke-dasharray', opt.lineDash.join(' '));
     let text = g.appendChild(document.createElementNS(xmlns, 'text'));
     text.setAttributeNS(null, 'x', `${(i + 1) * gridWidth}`);
-    text.setAttributeNS(null, 'y', `${-config.textMargin}`);
-    text.setAttributeNS(null, 'fill', config.textColor);
+    text.setAttributeNS(null, 'y', `${-opt.textMargin}`);
+    text.setAttributeNS(null, 'fill', opt.textColor);
     text.setAttributeNS(null, 'alignment-baseline', 'middle');
     text.setAttributeNS(null, 'text-anchor', 'start');
-    text.setAttributeNS(null,'transform', `rotate(-90, ${(i+1) * gridWidth}, ${-config.textMargin})`);
+    text.setAttributeNS(null,'transform', `rotate(-90, ${(i+1) * gridWidth}, ${-opt.textMargin})`);
     text.appendChild(document.createTextNode(data.x[i]));
   }
 
@@ -60,12 +61,12 @@ export default function contactMapSVG(data={x: [], y: [], data: {}}) {
     line.setAttributeNS(null, 'x1', '0');
     line.setAttributeNS(null, 'y2', `${(i + 1) * gridWidth}`);
     line.setAttributeNS(null, 'x2', `${w}`);
-    line.setAttributeNS(null, 'stroke', config.lineColor);
-    line.setAttributeNS(null, 'stroke-dasharray', config.lineDash.join(' '));
+    line.setAttributeNS(null, 'stroke', opt.lineColor);
+    line.setAttributeNS(null, 'stroke-dasharray', opt.lineDash.join(' '));
     let text = g.appendChild(document.createElementNS(xmlns, 'text'));
     text.setAttributeNS(null, 'y', `${(i + 1) * gridWidth}`);
-    text.setAttributeNS(null, 'x', `${-config.textMargin}`);
-    text.setAttributeNS(null, 'fill', config.textColor);
+    text.setAttributeNS(null, 'x', `${-opt.textMargin}`);
+    text.setAttributeNS(null, 'fill', opt.textColor);
     text.setAttributeNS(null, 'alignment-baseline', 'middle');
     text.setAttributeNS(null, 'text-anchor', 'end');
     text.appendChild(document.createTextNode(data.y[i]));
@@ -79,7 +80,7 @@ export default function contactMapSVG(data={x: [], y: [], data: {}}) {
         let circle = g.appendChild(document.createElementNS(xmlns, 'circle'));
         circle.setAttributeNS(null, 'cx', (i + 1) * gridWidth + '');
         circle.setAttributeNS(null, 'cy', (j + 1) * gridWidth + '');
-        circle.setAttributeNS(null, 'r', config.circleRadius);
+        circle.setAttributeNS(null, 'r', opt.circleRadius);
         circle.setAttributeNS(null, 'fill', getColor(o.type));
       }
     }

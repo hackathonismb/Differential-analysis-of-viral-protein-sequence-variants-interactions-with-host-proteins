@@ -4,7 +4,7 @@ import setupDownload from "./utils/download.js";
 import setupImgSliding from "./utils/image-sliding.js";
 
 window.onload = () => {
-  drawContactMap(document.getElementById('canvas'), data);
+  drawContactMap(document.getElementById('canvas'), data, 'info-panel', 'type-options');
   handleModeSwitch();
   handleTabSwitch();
   setupDownload();
