@@ -35,13 +35,17 @@ export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}, 
   // [-1, -1] represents not hovering on a circle, [m, n] tells which circle is highlighted
   ctx.highlighted = [-1, -1];
 
-  canvas.infoPanel = document.getElementById(infoPanelId);
+  if (infoPanelId) {
+    canvas.infoPanel = document.getElementById(infoPanelId);
+  }
 
   requestAnimationFrame(() => {
     updateContactMap(ctx, {x: 0, y: 0}, true);
-    requestAnimationFrame(() => {
-      createTypeOptions(ctx, typeFilterId);
-    })
+    if (typeFilterId) {
+      requestAnimationFrame(() => {
+        createTypeOptions(ctx, typeFilterId);
+      });
+    }
   });
 
   canvas.addEventListener('contextmenu', evt => {
@@ -60,7 +64,9 @@ export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}, 
           y: evt.clientY,
         });
         ctx.canvas.infoPanel.classList.add('live');
-        updateInfoPanel(ctx.canvas.infoPanel, obj, {left: evt.x, top: evt.y});
+        if (canvas.infoPanel) {
+          updateInfoPanel(ctx.canvas.infoPanel, obj, {left: evt.x, top: evt.y});
+        }
       });
     }
   });
@@ -71,14 +77,18 @@ export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}, 
         x: evt.clientX,
         y: evt.clientY,
       });
-      ctx.canvas.infoPanel.classList.remove('live');
+      if (canvas.infoPanel) {
+        ctx.canvas.infoPanel.classList.remove('live');
+      }
     })
   });
 
   canvas.addEventListener('mouseleave', () => {
     requestAnimationFrame(() => {
       updateContactMap(ctx);
-      canvas.infoPanel.classList.remove('live');
+      if (canvas.infoPanel) {
+        canvas.infoPanel.classList.remove('live');
+      }
     });
   });
 
@@ -87,7 +97,9 @@ export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}, 
       setupScale(ctx);
       requestAnimationFrame(() => {
         updateContactMap(ctx);
-        ctx.canvas.infoPanel.classList.remove('live');
+        if (canvas.infoPanel) {
+          ctx.canvas.infoPanel.classList.remove('live');
+        }
       });
     }
   });
