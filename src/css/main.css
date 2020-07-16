@@ -200,7 +200,7 @@ div.gallery-image {
 
 div.gallery-frame div.gallery-image img {
     display: block;
-    transition: all 1.6s;
+    transition: left 1.2s, opacity .8s;
     width: 60%;
     height: auto;
     margin: auto;
@@ -217,7 +217,7 @@ div.gallery-frame div.gallery-image img.current {
 }
 
 div.gallery-frame div.gallery-image img.gone {
-    left: -120%;
+    left: -200%;
 }
 
 
