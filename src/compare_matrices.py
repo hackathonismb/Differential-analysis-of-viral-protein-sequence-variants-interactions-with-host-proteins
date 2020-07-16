@@ -134,11 +134,13 @@ def main( name1, name2, delta):
     write_list( output_path + 'list_labeled_contacts_for_'+ partial_file_name_string,
                         list_labeled_contacts, header_str )
 
-    file_name_for_labels = 'common_labels_for_'+ partial_file_name_string+'.csv'
-    df_common_labels.to_csv(output_path + file_name_for_labels )
+    file_name_for_labels = 'common_labels_for_'+ partial_file_name_string
+    df_common_labels.to_csv(output_path + file_name_for_labels+'.csv' )
+    df_common_labels.to_json(output_path + file_name_for_labels+'.json' )
 
-    file_name_for_values = 'common_values_'+type_of_data+'_for_'+ partial_file_name_string+'.csv'
-    df_common_values.to_csv(output_path + file_name_for_values )
+    file_name_for_values = 'common_values_'+type_of_data+'_for_'+ partial_file_name_string
+    df_common_values.to_csv(output_path + file_name_for_values+'.csv' )
+    df_common_values.to_json(output_path + file_name_for_values+'.json' )
 
     #write_matrix( output_path + 'common_matrix_for_'+ name1 +'_'+name2+'_delta_'+str(delta)+'.csv',
     #                    m_common, header_str )

@@ -13,7 +13,15 @@ export default function setupDownload() {
     hl.click();
   });
   document.getElementById('save-as-svg').addEventListener('click', function() {
-    contactMapSVG(document.getElementById('canvas').getContext('2d').data);
+    let canvas = document.getElementById('canvas');
+    let setting = {
+      outerWidth: canvas.clientWidth,
+      outerHeight: canvas.clientHeight,
+      innerWidth: canvas.innerWidth,
+      innerHeight: canvas.innerHeight,
+      selectedTypes: canvas.getContext('2d').selectedTypes,
+    }
+    contactMapSVG('svg', document.getElementById('canvas').getContext('2d').data, setting);
     let svg = document.getElementById('svg');
     let pre = '<?xml version="1.0" standalone="no"?>\r\n';
     let blob = new Blob([pre, svg.outerHTML], {type: 'image/svg+xml;charset=utf-8'});

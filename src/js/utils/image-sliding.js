@@ -1,5 +1,9 @@
 const base = '../figures/';
 const imageNames = [
+  "common_contacts.jpg",
+  "common_labels_.png",
+  "common_labels_categ.png",
+  "common_values_.png",
   "6M0J_all_contacts.png",
   "6M0J_contact.png",
   "2AJF_all_contacts.png",
