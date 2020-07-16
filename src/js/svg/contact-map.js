@@ -3,21 +3,21 @@ import getColor from "../utils/colors.js";
 
 const xmlns = "http://www.w3.org/2000/svg";
 
-export default function contactMapSVG(id, data={x: [], y: [], data: {}}, options={}) {
+export default function contactMapSVG(id, data={x: [], y: [], data: {}}, setting={}, options={}) {
   let opt = Object.assign({}, config, options);
   let svg = document.getElementById(id);
   while (svg.lastChild) {
     svg.removeChild(svg.lastChild);
   }
-  let canvas = document.getElementById('canvas');
-  svg.setAttribute('width', canvas.clientWidth + '');
-  svg.setAttribute('height', canvas.clientHeight + '');
+
+  svg.setAttribute('width', setting.outerWidth + '');
+  svg.setAttribute('height', setting.outerHeight + '');
 
   let bg = svg.appendChild(document.createElementNS(xmlns, 'rect'));
   bg.setAttributeNS(null, 'x', 0);
   bg.setAttributeNS(null, 'y', 0);
-  bg.setAttributeNS(null, 'width', canvas.clientWidth + '');
-  bg.setAttributeNS(null, 'height', canvas.clientHeight + '');
+  bg.setAttributeNS(null, 'width', setting.outerWidth + '');
+  bg.setAttributeNS(null, 'height', setting.outerHeight + '');
   bg.setAttributeNS(null, 'fill', opt.backgroundColor);
 
   let g = svg.appendChild(document.createElementNS(xmlns, 'g'));
@@ -26,8 +26,8 @@ export default function contactMapSVG(id, data={x: [], y: [], data: {}}, options
   g.setAttributeNS(null, 'font-size', opt.font.split(' ')[0]);
   g.setAttributeNS(null, 'stroke-width', opt.lineWidth);
 
-  let w = canvas.innerWidth;
-  let h = canvas.innerHeight;
+  let w = setting.innerWidth;
+  let h = setting.innerHeight;
   let rect = g.appendChild(document.createElementNS(xmlns, 'rect'));
   rect.setAttributeNS(null, 'x', 0);
   rect.setAttributeNS(null, 'y', 0);
@@ -72,11 +72,10 @@ export default function contactMapSVG(id, data={x: [], y: [], data: {}}, options
     text.appendChild(document.createTextNode(data.y[i]));
   }
 
-  let selectedTypes = canvas.getContext('2d').selectedTypes;
   for (let i = 0; i < data.x.length; i++) {
     for (let j = 0; j < data.y.length; j++) {
       let o = data.data[`${data.x[i]}-${data.y[j]}`];
-      if (selectedTypes.includes(o.type) && o.value) {
+      if (setting.selectedTypes.includes(o.type) && o.value) {
         let circle = g.appendChild(document.createElementNS(xmlns, 'circle'));
         circle.setAttributeNS(null, 'cx', (i + 1) * gridWidth + '');
         circle.setAttributeNS(null, 'cy', (j + 1) * gridWidth + '');

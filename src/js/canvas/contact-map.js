@@ -94,12 +94,12 @@ export default function drawContactMap(canvas, data = {x: [], y: [], data: {}}, 
 
   window.addEventListener('scroll', () => {
     if (window.devicePixelRatio !== ctx.devicePixelRatio) {
-      setupScale(ctx);
+      if (canvas.infoPanel) {
+        ctx.canvas.infoPanel.classList.remove('live');
+      }
       requestAnimationFrame(() => {
+        setupScale(ctx);
         updateContactMap(ctx);
-        if (canvas.infoPanel) {
-          ctx.canvas.infoPanel.classList.remove('live');
-        }
       });
     }
   });
