@@ -135,10 +135,11 @@ function updateContactMap(ctx, pos = {x: 0, y: 0}, required = false) {
   ctx.save();
   // ctx.clearRect(0, 0, ctx.w, ctx.h);
   ctx.fillStyle = opt.backgroundColor;
+  ctx.lineWidth = opt.lineWidth;
   ctx.fillRect(0, 0, ctx.w, ctx.h);
 
   ctx.strokeStyle = opt.lineColor;
-  ctx.translate(opt.margin.left - opt.lineWidth / 2, opt.margin.top - opt.lineWidth / 2);
+  ctx.translate(opt.margin.left, opt.margin.top);
   ctx.strokeRect(0, 0, w, h);
 
   ctx.setLineDash(opt.lineDash);
@@ -217,8 +218,8 @@ function updateContactMap(ctx, pos = {x: 0, y: 0}, required = false) {
  * @returns {(number|*)[]}
  */
 function getIndexes(opt, w, h, pos) {
-  let x = pos.x - opt.margin.left + opt.lineWidth / 2;
-  let y = pos.y - opt.margin.top + opt.lineWidth / 2;
+  let x = pos.x - opt.margin.left;
+  let y = pos.y - opt.margin.top;
   let m = getIndex(x, w, opt.gridWidth, opt.circleRadius);
   let n = getIndex(y, h, opt.gridWidth, opt.circleRadius);
 
