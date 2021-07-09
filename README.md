@@ -55,4 +55,4 @@ During the development of this project, we've established additional goals for t
 1. Link the interaction window currently at the chain level with computed interaction networks at the residue level
 2. Creating a database for SARS-CoV-2 mutations
 3. Visualization of intramolecular interactions between 1D maps, especially for H-bonds and Cys bridges
-4. Inegration of R into the ecosystem 
+4. Integration of R into the ecosystem 
